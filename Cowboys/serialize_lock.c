@@ -19,7 +19,9 @@ int serialize_lock(int no_wait)
     S_IWUSR     );  /* user permission: write */
 
   if (fd == -1)
+  {
     return -1;
+  }
 
   if (no_wait) {
     /* try to lock the "semaphore", if busy report that */
@@ -30,7 +32,9 @@ int serialize_lock(int no_wait)
   } else  {
     /* lock the "semaphore", wait until available */
     if (lockf( fd, F_LOCK, 0 ) == -1)
+    {
       return -1;
+    }
   }
 
   serialize_lock_fd = fd;
@@ -43,11 +47,13 @@ void serialize_unlock(void)
   int fd = serialize_lock_fd;
 
   if (fd == -1)
+  {
     return;
+  }
 
   /* close() automatically releases the file lock */
   /* so technically the call with F_ULOCK is not necessary */
-  lockf( fd, F_ULOCK, 0 );
-  close( fd );
+  lockf(fd, F_ULOCK, 0);
+  close(fd);
   serialize_lock_fd = -1;
 }

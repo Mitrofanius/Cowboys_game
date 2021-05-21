@@ -45,27 +45,17 @@ void parlcd_write_data2x(unsigned char *parlcd_mem_base, uint32_t data)
 
 void parlcd_delay(int msec)
 {
-  struct timespec wait_delay = {.tv_sec = msec / 1000,
-                                .tv_nsec = (msec % 1000) * 1000 * 1000};
+  struct timespec wait_delay = {.tv_sec = msec / 1000, .tv_nsec = (msec % 1000) * 1000 * 1000};
   clock_nanosleep(CLOCK_MONOTONIC, 0, &wait_delay, NULL);
 }
 
 void parlcd_hx8357_init(unsigned char *parlcd_mem_base)
 {
-  // toggle RST low to reset
-/*
-    digitalWrite(_rst, HIGH);
-    parlcd_delay(50);
-    digitalWrite(_rst, LOW);
-    parlcd_delay(10);
-    digitalWrite(_rst, HIGH);
-    parlcd_delay(10);
-*/
-    parlcd_write_cmd(parlcd_mem_base, 0x1);
-    parlcd_delay(30);
+  parlcd_write_cmd(parlcd_mem_base, 0x1);
+  parlcd_delay(30);
 
-#if defined(ILI9481)
-// Configure ILI9481 display
+  #if defined(ILI9481)
+  // Configure ILI9481 display
 
     parlcd_write_cmd(parlcd_mem_base, 0x11);
     parlcd_delay(20);
@@ -133,8 +123,8 @@ void parlcd_hx8357_init(unsigned char *parlcd_mem_base)
 
     parlcd_delay(25);
 
-#elif defined(HX8357_B)
-// Configure HX8357-B display
+  #elif defined(HX8357_B)
+    // Configure HX8357-B display
     parlcd_write_cmd(parlcd_mem_base, 0x11);
     parlcd_delay(20);
     parlcd_write_cmd(parlcd_mem_base, 0xD0);
@@ -197,10 +187,8 @@ void parlcd_hx8357_init(unsigned char *parlcd_mem_base)
     parlcd_write_cmd(parlcd_mem_base, 0x29);
 
     parlcd_delay(25);
-
-#else
-// HX8357-C display initialisation
-
+  #else
+    // HX8357-C display initialisation
     parlcd_write_cmd(parlcd_mem_base, 0xB9); // Enable extension command
     parlcd_write_data(parlcd_mem_base, 0xFF);
     parlcd_write_data(parlcd_mem_base, 0x83);
@@ -304,5 +292,5 @@ void parlcd_hx8357_init(unsigned char *parlcd_mem_base)
     parlcd_write_cmd(parlcd_mem_base, 0x29); // Display on
 
     parlcd_delay(120);
-#endif
+  #endif
 }
