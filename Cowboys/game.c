@@ -4,7 +4,7 @@
 
 void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
 {   
-    //show_loading_scene();
+    //draw_loading_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 
     char choice = ONE_PLAYER_GAME;
     start_main_menu(parlcd_mem_base, frame_buffer, font_descriptor, &choice);
@@ -13,18 +13,21 @@ void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, fo
     {
         case ONE_PLAYER_GAME:
             /* 1 player game */
+            printf("\n\n\n ONE_PLAYER_GAME \n\n\n");
             break;
         case TWO_PLAYERS_GAME:
             /* 2 players game */
-            printf("\n\n\n start_two_players_game(); \n\n\n");
+            printf("\n\n\n TWO_PLAYERS_GAME \n\n\n");
             //start_two_players_game();
             break;
         case SETTINGS:
             /* settings */
+            printf("\n\n\n SETTINGS \n\n\n");
             break;
         default:
+            printf("\n\n\n EXIT \n\n\n");
             break;
     }
 
-    //show_closing_scene();
+    //draw_closing_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 }

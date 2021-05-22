@@ -135,9 +135,79 @@ void draw_rectangle(unsigned short *frame_buffer, int x, int y, int width, int h
     }
 }
 
+char getch() {
+    char buf = 0;
+    struct termios old = {0};
+    if (tcgetattr(0, &old) < 0)
+    {
+        perror("tcgetattr()");
+    }
+    old.c_lflag &= ~ICANON;
+    old.c_lflag &= ~ECHO;
+    old.c_cc[VMIN] = 1;
+    old.c_cc[VTIME] = 0;
+    if (tcsetattr(0, TCSANOW, &old) < 0)
+    {
+        perror("tcsetattr ICANON");
+    }
+    if (read(0, &buf, 1) < 0)
+    {
+        perror("read()");
+    }
+    old.c_lflag |= ICANON;
+    old.c_lflag |= ECHO;
+    if (tcsetattr(0, TCSADRAIN, &old) < 0)
+    {
+        perror("tcsetattr ~ICANON");
+    }
+    return buf;
+}
+
+// void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
+// {
+//     char modulo = 0;
+
+//     for (size_t i = 0; i < count; i++)
+//     {   
+//         int i;
+//         /* Background */
+//         for (i = 0; i < 320 * 480; i++)
+//         {
+//             frame_buffer[i] = 0xCCCE;
+//         }
+//         /* Loading rectangle */
+//         draw_rectangle(frame_buffer, 57, 173, 368, 54, 5, 0, 0x49A5);
+
+//         /* Loading label */
+//         draw_char(frame_buffer, font_descriptor, 66, 101, 'L', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 110, 101, 'O', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 154, 101, 'A', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 198, 101, 'D', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 242, 101, 'I', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 286, 101, 'N', 0xFFFF);
+//         draw_char(frame_buffer, font_descriptor, 330, 101, 'G', 0xFFFF);
+
+//         if (modulo == 0) 
+//         {
+//             draw_char(frame_buffer, font_descriptor, 374, 101, '|', 0xFFFF);
+//         }
+//         else if (modulo == 1) 
+//         {
+//             draw_char(frame_buffer, font_descriptor, 374, 101, '/', 0xFFFF);
+//         }
+//         else if (modulo == 1) 
+//         {
+//             draw_char(frame_buffer, font_descriptor, 374, 101, '-', 0xFFFF);
+//         }
+        
+//         modulo = (modulo + 1) % 3;
+//     }
+// }
+
 void draw_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice)
 {
     int i;
+    /* Background */
     for (i = 0; i < 320 * 480; i++)
     {
         frame_buffer[i] = 0xCCCE;

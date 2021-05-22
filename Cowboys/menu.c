@@ -3,11 +3,11 @@
 
 void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice)
 {   
+    draw_main_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
+    
     char ch;
-    while ((ch = getc(stdin)) != 'q')
+    while ((ch = getch(stdin)) != '\n')
     {   
-        draw_main_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
-
         if (ch == 'w') 
         {
             *choice = (*choice - 1 + 4) % 4;
@@ -16,5 +16,7 @@ void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffe
         {
             *choice = (*choice + 1) % 4;
         }
+
+        draw_main_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
     }   
 }

@@ -4,6 +4,7 @@
 
 #include "font_types.h"
 #include "mzapo_parlcd.h"
+#include <termios.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,6 +19,10 @@ void draw_pixel_big(unsigned short *frame_buffer, int x, int y, unsigned short c
 unsigned int hsv2rgb_lcd(int hue, int saturation, int value);
 
 void draw_rectangle(unsigned short *frame_buffer, int x, int y, int width, int height, int frame_height, unsigned short frame_color, unsigned short fill_color);
+
+char getch();
+
+void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor);
 
 void draw_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice);
 
