@@ -1,6 +1,5 @@
 
 #include "game.h"
-#include "menu.h"
 
 void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
 {   

@@ -1,16 +1,4 @@
-#define _POSIX_C_SOURCE 200112L
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <time.h>
-#include <unistd.h>
-#include <time.h>
-
-#include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
-#include "mzapo_regs.h"
-#include "draw.h"
 #include "game.h"
 
 #define M_PI 10
@@ -20,9 +8,6 @@ int main(int argc, char *argv[])
   unsigned char *parlcd_mem_base;
   unsigned short *frame_buffer;
   font_descriptor_t *font_descriptor;
-
-  /* ??? */
-  //struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 120 * 1000 * 1000};
 
   /* Font */
   font_descriptor = &font_winFreeSystem14x16;
@@ -37,6 +22,7 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
+  /* Starts game */
   start_game(parlcd_mem_base, frame_buffer, font_descriptor);
 
   return 0;

@@ -1,5 +1,5 @@
 
-#include "menu.h"
+#include "main_menu.h"
 
 void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice)
 {   

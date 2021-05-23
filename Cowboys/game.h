@@ -1,8 +1,16 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "draw.h"
-#include <stdio.h>
+#define _POSIX_C_SOURCE 200112L
+
+#include <stdlib.h>
+
+#include "mzapo_parlcd.h"
+#include "mzapo_phys.h"
+#include "mzapo_regs.h"
+
+#include "main_menu.h"
+#include "draw_scene_animation.h"
 
 #ifdef __cplusplus
 extern "C" {

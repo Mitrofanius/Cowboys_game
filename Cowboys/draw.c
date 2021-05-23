@@ -1,9 +1,7 @@
 
 #include "draw.h"
-
-#define SCALE 3
  
-void draw_char(unsigned short *frame_buffer, font_descriptor_t *font_descriptor, int x, int y, char ch, unsigned short color)
+void draw_char(unsigned short *frame_buffer, font_descriptor_t *font_descriptor, int x, int y, char ch, unsigned char scale, unsigned short color)
 {
     // int w = char_width(ch);
     int w = 14;
@@ -29,7 +27,7 @@ void draw_char(unsigned short *frame_buffer, font_descriptor_t *font_descriptor,
             {
                 if ((val & 0x8000) != 0)
                 {
-                    draw_pixel_big(frame_buffer, x + SCALE * j, y + SCALE * i, color);
+                    draw_pixel_scale(frame_buffer, x + scale * j, y + scale * i, scale, color);
                 }
                 val <<= 1;
             }
@@ -46,12 +44,12 @@ void draw_pixel(unsigned short *frame_buffer, int x, int y, unsigned short color
     }
 }
 
-void draw_pixel_big(unsigned short *frame_buffer, int x, int y, unsigned short color)
+void draw_pixel_scale(unsigned short *frame_buffer, int x, int y, unsigned char scale, unsigned short color)
 {
     int i, j;
-    for (i = 0; i < SCALE; i++)
+    for (i = 0; i < scale; i++)
     {
-        for (j = 0; j < SCALE; j++)
+        for (j = 0; j < scale; j++)
         {
             draw_pixel(frame_buffer, x + i, y + j, color);
         }
@@ -134,268 +132,3 @@ void draw_rectangle(unsigned short *frame_buffer, int x, int y, int width, int h
         }
     }
 }
-
-char getch() {
-    char buf = 0;
-    struct termios old = {0};
-    if (tcgetattr(0, &old) < 0)
-    {
-        perror("tcgetattr()");
-    }
-    old.c_lflag &= ~ICANON;
-    old.c_lflag &= ~ECHO;
-    old.c_cc[VMIN] = 1;
-    old.c_cc[VTIME] = 0;
-    if (tcsetattr(0, TCSANOW, &old) < 0)
-    {
-        perror("tcsetattr ICANON");
-    }
-    if (read(0, &buf, 1) < 0)
-    {
-        perror("read()");
-    }
-    old.c_lflag |= ICANON;
-    old.c_lflag |= ECHO;
-    if (tcsetattr(0, TCSADRAIN, &old) < 0)
-    {
-        perror("tcsetattr ~ICANON");
-    }
-    return buf;
-}
-
-void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
-{   
-    int i, k;
-    char modulo_time = 0;
-    char modulo_char = 0;
-
-    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 3)
-    {   
-        
-        /* Background */
-        for (k = 0; k < 320 * 480; k++)
-        {
-            frame_buffer[k] = 0xCCCE;
-        }
-        /* Loading rectangle */
-        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 173, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-
-        /* Progress rectangle */
-        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X + REGTANGLE_FRAME_HEIGHT, 173 + REGTANGLE_FRAME_HEIGHT, i, REGTANGLE_HEIGHT - REGTANGLE_FRAME_HEIGHT * 2, 0, 0, 0xFFFF);
-
-        /* Loading label */
-        draw_char(frame_buffer, font_descriptor, 66, 101, 'L', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 110, 101, 'O', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 154, 101, 'A', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 198, 101, 'D', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 242, 101, 'I', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 286, 101, 'N', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 330, 101, 'G', 0xFFFF);
-        
-        /* Animation */
-        if (modulo_char == 0) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '|', 0xFFFF);
-        }
-        else if (modulo_char == 1) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '/', 0xFFFF);
-        }
-        else if (modulo_char == 2) 
-        {
-            draw_char(frame_buffer, font_descriptor, 370, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 378, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 390, 101, '-', 0xFFFF);
-        }
-        else if (modulo_char == 3) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '\\', 0xFFFF);
-        }
-        else if (modulo_char == 4) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '|', 0xFFFF);
-        }
-        else if (modulo_char == 5) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '/', 0xFFFF);
-        }
-        else if (modulo_char == 6) 
-        {
-            draw_char(frame_buffer, font_descriptor, 370, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 378, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 390, 101, '-', 0xFFFF);
-        }
-        else if (modulo_char == 7) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '\\', 0xFFFF);
-        }
-
-        /* Timer for anmation */
-        if (modulo_time % 10 == 0)
-        {
-            modulo_char = (modulo_char + 1) % 8;
-        }
-
-        /* Sends info to screen */
-        parlcd_write_cmd(parlcd_mem_base, 0x2c);
-        for (k = 0; k < 480 * 320; k++)
-        {
-            parlcd_write_data(parlcd_mem_base, frame_buffer[k]);
-        }
-
-        modulo_time++;
-    }
-}
-
-void draw_closing_scene(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
-{   
-    int i, k;
-    char modulo_time = 0;
-    char modulo_char = 0;
-
-    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 3)
-    {   
-        
-        /* Background */
-        for (k = 0; k < 320 * 480; k++)
-        {
-            frame_buffer[k] = 0xCCCE;
-        }
-        /* Loading rectangle */
-        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 173, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-
-        /* Progress rectangle */
-        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X + REGTANGLE_FRAME_HEIGHT, 173 + REGTANGLE_FRAME_HEIGHT, i, REGTANGLE_HEIGHT - REGTANGLE_FRAME_HEIGHT * 2, 0, 0, 0xFFFF);
-
-        /* Closing label */
-        draw_char(frame_buffer, font_descriptor, 66, 101, 'C', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 110, 101, 'L', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 154, 101, 'O', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 198, 101, 'S', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 242, 101, 'I', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 286, 101, 'N', 0xFFFF);
-        draw_char(frame_buffer, font_descriptor, 330, 101, 'G', 0xFFFF);
-        
-        /* Animation */
-        if (modulo_char == 0) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '|', 0xFFFF);
-        }
-        else if (modulo_char == 1) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '/', 0xFFFF);
-        }
-        else if (modulo_char == 2) 
-        {
-            draw_char(frame_buffer, font_descriptor, 370, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 378, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 390, 101, '-', 0xFFFF);
-        }
-        else if (modulo_char == 3) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '\\', 0xFFFF);
-        }
-        else if (modulo_char == 4) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '|', 0xFFFF);
-        }
-        else if (modulo_char == 5) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '/', 0xFFFF);
-        }
-        else if (modulo_char == 6) 
-        {
-            draw_char(frame_buffer, font_descriptor, 370, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 378, 101, '-', 0xFFFF);
-            draw_char(frame_buffer, font_descriptor, 390, 101, '-', 0xFFFF);
-        }
-        else if (modulo_char == 7) 
-        {
-            draw_char(frame_buffer, font_descriptor, 379, 101, '\\', 0xFFFF);
-        }
-
-        /* Timer for anmation */
-        if (modulo_time % 10 == 0)
-        {
-            modulo_char = (modulo_char + 1) % 8;
-        }
-
-        /* Sends info to screen */
-        parlcd_write_cmd(parlcd_mem_base, 0x2c);
-        for (k = 0; k < 480 * 320; k++)
-        {
-            parlcd_write_data(parlcd_mem_base, frame_buffer[k]);
-        }
-
-        modulo_time++;
-    }
-}
-
-void draw_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice)
-{
-    int i;
-    /* Background */
-    for (i = 0; i < 320 * 480; i++)
-    {
-        frame_buffer[i] = 0xCCCE;
-    }
-
-    /* 1 PLAYER rectangle */
-    draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 22, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-    /* 2 PLAYERS rectangle */
-    draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 98, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-    /* STTINGS rectangle */
-    draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 173, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-    /* EXIT rectangle */
-    draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 247, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
-
-
-    /* CHOICE rectangle */
-    draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 22 + *choice * 75, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x9CF3);
-
-
-    /* 1 PLAYER label */
-    draw_char(frame_buffer, font_descriptor, 88, 25, '1', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 132, 25, 'P', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 176, 25, 'L', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 220, 25, 'A', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 264, 25, 'Y', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 308, 25, 'E', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 352, 25, 'R', 0xFFFF);
-
-    /* 2 PLAYERS label */
-    draw_char(frame_buffer, font_descriptor, 66, 101, '2', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 110, 101, 'P', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 154, 101, 'L', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 198, 101, 'A', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 242, 101, 'Y', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 286, 101, 'E', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 330, 101, 'R', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 374, 101, 'S', 0xFFFF);
-
-    /* SETTINGS label */
-    draw_char(frame_buffer, font_descriptor, 84, 176, 'S', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 128, 176, 'E', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 172, 176, 'T', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 216, 176, 'T', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 260, 176, 'I', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 286, 176, 'N', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 330, 176, 'G', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 374, 176, 'S', 0xFFFF);
-
-    /* EXIT label */
-    draw_char(frame_buffer, font_descriptor, 172, 250, 'E', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 216, 250, 'X', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 260, 250, 'I', 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 286, 250, 'T', 0xFFFF);
-
-
-    /* Sends info to screen */
-    parlcd_write_cmd(parlcd_mem_base, 0x2c);
-    for (i = 0; i < 480 * 320; i++)
-    {
-        parlcd_write_data(parlcd_mem_base, frame_buffer[i]);
-    }
-}
-
-

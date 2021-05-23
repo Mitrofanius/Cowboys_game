@@ -6,11 +6,11 @@ CFLAGS =-g -std=gnu99 -O1 -Wall
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 
-# SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c
 SOURCES = main.c mzapo_phys.c mzapo_parlcd.c
-SOURCES += game.c menu.c draw.c font_prop14x16.c font_rom8x16.c
+SOURCES += game.c main_menu.c input_catcher.c
+SOURCES +=  draw_scene_animation.c draw.c draw_main_menu.c font_prop14x16.c font_rom8x16.c
 TARGET_EXE = cowboys
-TARGET_IP ?= 192.168.202.207
+TARGET_IP ?= 192.168.202.175
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)

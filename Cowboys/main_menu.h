@@ -1,11 +1,8 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef MAIN_MENU_H
+#define MAIN_MENU_H
 
-#include <stdio.h>
-
-#include "mzapo_parlcd.h"
-#include "draw.h"
-
+#include "draw_main_menu.h"
+#include "input_catcher.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,4 +18,4 @@ void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffe
 } /* extern "C"*/
 #endif
 
-#endif  /*MENU_H*/
+#endif  /*MAIN_MENU_H*/
