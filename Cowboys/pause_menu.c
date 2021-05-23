@@ -3,7 +3,7 @@
 
 void start_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice)
 {
-    draw_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, *choice);
+    draw_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
 
     char ch;
     while ((ch = getch(stdin)) != '\n')
@@ -26,6 +26,6 @@ void start_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buff
             }
         }
 
-        draw_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, *choice);
+        draw_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
     }
 }
