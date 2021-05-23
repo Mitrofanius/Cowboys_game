@@ -1,19 +1,21 @@
 #ifndef INPUT_CATCHER_H
 #define INPUT_CATCHER_H
 
+#include <unistd.h>
 #include <stdio.h>
 #include <termios.h>
 
 #define ESCAPE 27
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-char getch();
+    char getch();
 
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*INPUT_CATCHER_H*/
+#endif /*INPUT_CATCHER_H*/

@@ -2,29 +2,36 @@
 #include "settings_menu.h"
 
 void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
-{   
+{
     unsigned char choice = BACK;
     draw_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &choice);
-    
+
     unsigned char ch;
     while (true)
-    {   
+    {
         ch = getch(stdin);
-        
-        if (ch == 'w') 
+
+        if (ch == '\033')
         {
-            choice = (choice - 1 + 1) % 1;
+            getch(); // skip the [
+            switch (getch())
+            { // the real value
+            case 'A':
+                choice = (choice - 1 + 1) % 1;
+                // code for arrow up
+                break;
+            case 'B':
+                choice = (choice + 1) % 1;
+                // code for arrow down
+                break;
+            }
         }
-        else if (ch == 's') 
+        else if (ch == '\n')
         {
-            choice = (choice + 1) % 1;
-        }
-        else if (ch == '\n') {
             if (choice == BACK)
             {
                 break;
             }
-            
         }
 
         draw_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &choice);
