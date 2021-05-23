@@ -4,12 +4,16 @@
 #define _POSIX_C_SOURCE 200112L
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 
 #include "main_menu.h"
+#include "one_player_game.h"
+#include "two_players_game.h"
+#include "settings_menu.h"
 #include "draw_scene_animation.h"
 
 #ifdef __cplusplus

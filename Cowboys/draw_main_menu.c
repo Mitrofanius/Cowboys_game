@@ -1,7 +1,7 @@
 
 #include "draw_main_menu.h"
 
-void draw_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, char *choice)
+void draw_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *const choice)
 {
     int i;
     /* Background */

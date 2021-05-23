@@ -3,6 +3,7 @@
 #define DRAW_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <termios.h>
 
 #include "font_types.h"
@@ -11,6 +12,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
 
 #define REGTANGL_LEFT_UP_X 57
 #define REGTANGLE_FRAME_HEIGHT 5

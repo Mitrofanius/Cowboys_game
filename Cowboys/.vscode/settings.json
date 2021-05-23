@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "mzapo_regs.h": "c"
+        "*.list": "asm-intel-x86-generic",
+        "mzapo_regs.h": "c",
+        "main_menu.h": "c",
+        "one_player_game.h": "c",
+        "settings.h": "c"
     }
 }

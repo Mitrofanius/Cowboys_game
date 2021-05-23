@@ -7,7 +7,7 @@ void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     char modulo_time = 0;
     char modulo_char = 0;
 
-    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 3)
+    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 4)
     {   
         
         /* Background */
@@ -91,7 +91,7 @@ void draw_closing_scene(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     char modulo_time = 0;
     char modulo_char = 0;
 
-    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 3)
+    for (i = 0; i <= REGTANGLE_WIDTH - REGTANGLE_FRAME_HEIGHT * 2; i += 4)
     {   
         
         /* Background */

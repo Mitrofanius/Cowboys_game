@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <termios.h>
 
+#define ESCAPE 27
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -14,4 +16,4 @@ char getch();
 } /* extern "C"*/
 #endif
 
-#endif  /*DRAW_H*/
+#endif  /*INPUT_CATCHER_H*/
