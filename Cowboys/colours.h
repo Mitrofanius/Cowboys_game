@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include "draw.h"
 
 #ifndef COLOURS_H
 #define COLOURS_H
@@ -21,8 +20,5 @@
 #define C_LIGHT_GRAY 0x632C
 #define C_DARK_YELLOW 0xB620
 #define __NO__ 0x1111
-
-void draw_cowboy_blue_aiming(unsigned short *frame_buffer, int x, int y, int scale);
-unsigned short get_cowboy_blue_aiming(int i, int j);
 
 #endif /*COLOURS_H*/

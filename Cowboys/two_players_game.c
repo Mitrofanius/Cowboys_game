@@ -5,7 +5,17 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
 {   
     ///TODO: setup player's setting
 
-    draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor);
+    game_map_t game_map = {
+        .cowboy_blue.x = 30,
+        .cowboy_blue.y = 30,
+        .cowboy_blue.width = 20,
+        .cowboy_blue.height = 17,
+        .cowboy_blue.colour = C_LIGHT_BLUE,
+        .cowboy_blue.side = LEFT,
+        .cowboy_blue.state = AIMING
+    };
+
+    draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     
     unsigned char ch, choice;
     while (true)
@@ -46,6 +56,6 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         //     second player fire
         // }
 
-        draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor);
+        draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     }
 }

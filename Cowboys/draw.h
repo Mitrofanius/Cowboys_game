@@ -7,6 +7,8 @@
 #include <termios.h>
 
 #include "font_types.h"
+#include "game_map.h"
+#include "colours.h"
 #include "mzapo_parlcd.h"
 
 #ifdef __cplusplus
