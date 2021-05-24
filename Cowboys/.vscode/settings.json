@@ -4,6 +4,7 @@
         "mzapo_regs.h": "c",
         "main_menu.h": "c",
         "one_player_game.h": "c",
-        "settings.h": "c"
+        "settings.h": "c",
+        "type_traits": "c"
     }
 }

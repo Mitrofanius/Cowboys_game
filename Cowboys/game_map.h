@@ -8,8 +8,8 @@ extern "C" {
 #endif
 
 typedef struct {
-    cowboy_t cowboy_blue;
-    //cowboy_t cowboy_red;
+    cowboy_t cowboy_left;
+    cowboy_t cowboy_right;
     //objects_t objects;
     //unsigned short bullet_color;
 } game_map_t; 

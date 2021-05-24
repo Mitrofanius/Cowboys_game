@@ -11,7 +11,7 @@
 #define C_LIGHT_ORANGE 0xED04
 #define C_SKIN 0xFDEF
 #define C_DARK_GREEN 0x0480
-#define C_LIGHT_GREEN 0x0
+#define C_LIGHT_GREEN 0x1FC1
 #define C_RED 0xD882
 #define C_LIGHT_YELLOW 0xE763
 #define C_DARK_RED 0xCB61
@@ -20,5 +20,6 @@
 #define C_LIGHT_GRAY 0x632C
 #define C_DARK_YELLOW 0xB620
 #define __NO__ 0x1111
+#define NOT_SPECIFIED 0xF81E
 
 #endif /*COLOURS_H*/

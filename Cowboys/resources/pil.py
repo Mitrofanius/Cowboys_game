@@ -107,6 +107,6 @@ if __name__ == '__main__':
     #     if filename.endswith(".png"):
     #         convert_image("Converting/" + filename)
 
-    for filename in os.listdir("resources/cowboy_blue/"):
+    for filename in os.listdir("objects/"):
         if filename.endswith(".png"):
-            convert_image("resources/cowboy_blue/" + filename)
+            convert_image("objects/" + filename)

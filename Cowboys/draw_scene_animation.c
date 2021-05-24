@@ -167,4 +167,17 @@ void draw_closing_scene(unsigned char *parlcd_mem_base, unsigned short *frame_bu
 
         modulo_time++;
     }
+
+    /* Black background */
+    for (k = 0; k < 320 * 480; k++)
+    {
+        frame_buffer[k] = 0x0000;
+    }
+
+    /* Sends info to screen */
+    parlcd_write_cmd(parlcd_mem_base, 0x2c);
+    for (k = 0; k < 480 * 320; k++)
+    {
+        parlcd_write_data(parlcd_mem_base, frame_buffer[k]);
+    }
 }
