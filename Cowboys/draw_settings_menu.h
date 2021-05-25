@@ -18,13 +18,17 @@
 #define BACK 3
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, cowboy_t *cowboy_left, cowboy_t *cowboy_right, unsigned char hoice_button,  unsigned char choice_left_player_color);
+    void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer,
+                            font_descriptor_t *font_descriptor, cowboy_t *cowboy_left,
+                            cowboy_t *cowboy_right, unsigned char choice_button,
+                            unsigned char choice_left_player_color, unsigned char choice_right_player_color, int choice_bullet_speed);
 
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*DRAW_SETTINGS_MENU_H*/
+#endif /*DRAW_SETTINGS_MENU_H*/
