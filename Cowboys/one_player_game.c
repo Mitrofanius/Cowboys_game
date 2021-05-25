@@ -1,7 +1,7 @@
 
 #include "one_player_game.h"
 
-void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
+void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {
     ///TODO: setup player's setting
 

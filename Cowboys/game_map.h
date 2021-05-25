@@ -10,8 +10,8 @@ extern "C" {
 typedef struct {
     cowboy_t cowboy_left;
     cowboy_t cowboy_right;
-    //objects_t objects;
-    //unsigned short bullet_color;
+    //object_manager_t object_manager;
+    int bullet_speed;
 } game_map_t; 
 
 #ifdef __cplusplus

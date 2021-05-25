@@ -19,7 +19,9 @@
 #define C_GRAY 0x3186
 #define C_LIGHT_GRAY 0x632C
 #define C_DARK_YELLOW 0xB620
+#define C_PURPLE 0x8010
+#define C_PINK 0xF81E
 #define __NO__ 0x1111
-#define NOT_SPECIFIED 0xF81E
+#define NOT_SPECIFIED 0xF81A
 
 #endif /*COLOURS_H*/

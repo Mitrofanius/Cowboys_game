@@ -5,6 +5,9 @@
         "main_menu.h": "c",
         "one_player_game.h": "c",
         "settings.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "two_players_game.h": "c",
+        "settings_menu.h": "c",
+        "draw_settings_menu.h": "c"
     }
 }

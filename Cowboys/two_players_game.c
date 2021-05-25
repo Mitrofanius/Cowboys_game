@@ -1,19 +1,19 @@
 
 #include "two_players_game.h"
 
-void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
+void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {   
     game_map_t game_map = {
-        .cowboy_left.x = 20,
-        .cowboy_left.y = 20,
+        .cowboy_left.x = 15,
+        .cowboy_left.y = 65,
         .cowboy_left.width = 20,
         .cowboy_left.height = 17,
         .cowboy_left.colour = C_LIGHT_GREEN,
         .cowboy_left.side = LEFT,
         .cowboy_left.state = AIMING,
 
-        .cowboy_right.x = 200,
-        .cowboy_right.y = 200,
+        .cowboy_right.x = 405,
+        .cowboy_right.y = 65,
         .cowboy_right.width = 20,
         .cowboy_right.height = 17,
         .cowboy_right.colour = C_LIGHT_ORANGE,
@@ -21,7 +21,10 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         .cowboy_right.state = AIMING,
     };
 
-    ///TODO: setup player's setting colours from settings
+    ///TODO: setup player's setting colours from settings, bullet speed
+    game_map.cowboy_left.colour = settings->player_left_color;
+    game_map.cowboy_right.colour = settings->player_right_color;
+    game_map.bullet_speed = settings->bullet_speed;
 
     draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     
@@ -47,14 +50,6 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         {
             game_map.cowboy_left.y += 10;
         }
-        else if (ch == 'a') 
-        {
-            game_map.cowboy_left.x -= 10;
-        }
-        else if (ch == 'd') 
-        {
-            game_map.cowboy_left.x += 10;
-        }
         else if (ch == 'o') 
         {
             game_map.cowboy_right.y -= 10;
@@ -62,14 +57,6 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         else if (ch == 'l') 
         {
             game_map.cowboy_right.y += 10;
-        }
-        else if (ch == 'k') 
-        {
-            game_map.cowboy_right.x -= 10;
-        }
-        else if (ch == ';') 
-        {
-            game_map.cowboy_right.x += 10;
         }
 
         // else if (ch == 'w') 
