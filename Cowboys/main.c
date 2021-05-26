@@ -1,10 +1,23 @@
 
 #include "game.h"
+#include "serialize_lock.h"
 
 #define M_PI 10
 
 int main(int argc, char *argv[])
 {
+  if (serialize_lock(1) <= 0)
+  {
+    printf("System is occupied\n");
+
+    if (1)
+    {
+      printf("Waitting\n");
+      /* Wait till application holding lock releases it or exits */
+      serialize_lock(0);
+    }
+  }
+
   unsigned char *parlcd_mem_base;
   unsigned short *frame_buffer;
   font_descriptor_t *font_descriptor;
@@ -24,6 +37,7 @@ int main(int argc, char *argv[])
 
   /* Starts game */
   start_game(parlcd_mem_base, frame_buffer, font_descriptor);
+  serialize_unlock();
 
   return 0;
 }
