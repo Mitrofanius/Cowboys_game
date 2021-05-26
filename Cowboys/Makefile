@@ -14,7 +14,7 @@ SOURCES += draw_scene_animation.c draw.c draw_main_menu.c draw_settings_menu.c d
 SOURCES += draw_one_player_game.c draw_two_players_game.c draw_cowboy.c #draw_objects.c
 
 TARGET_EXE = cowboys
-TARGET_IP ?= 192.168.202.204
+TARGET_IP ?= 192.168.202.216
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
