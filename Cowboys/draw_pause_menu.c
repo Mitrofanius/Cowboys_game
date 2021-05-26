@@ -1,5 +1,5 @@
 
-#include "draw_pause_menu.h"
+#include "draw.h"
 
 void draw_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *const choice)
 {

@@ -1,5 +1,5 @@
-#ifndef SETTING_H
-#define SETTING_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,9 +12,8 @@ typedef struct
     int bullet_speed;
 } settings_t;
 
-
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*SETTING_H*/
+#endif  /*SETTINGS_H*/

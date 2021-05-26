@@ -1,5 +1,5 @@
 
-#include "main_menu.h"
+#include "scenes.h"
 
 void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice)
 {

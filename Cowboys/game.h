@@ -10,11 +10,9 @@
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 
-#include "main_menu.h"
-#include "one_player_game.h"
-#include "two_players_game.h"
-#include "settings_menu.h"
-#include "draw_scene_animation.h"
+#include "settings.h"
+#include "scenes.h"
+#include "draw.h"
 
 #ifdef __cplusplus
 extern "C" {

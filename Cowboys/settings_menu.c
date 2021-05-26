@@ -1,12 +1,10 @@
 
-#include "settings_menu.h"
+#include "scenes.h"
 
 void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {
     unsigned char choice_button = PLAYER_LEFT_COLOUR;
-    //unsigned char player_left_color = settings->player_left_color;
-    //unsigned char player_right_color = settings->player_right_color;
-    //int bullet_speed = settings->bullet_speed;
+    
     cowboy_t cowboy_left = {
         .x = 57,
         .y = 24,
@@ -225,6 +223,4 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
 
         draw_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &cowboy_left, &cowboy_right, choice_button, choice_left_player_color, choice_right_player_color, choice_bullet_speed);
     }
-
-    ///TODO: change the colour of the cowboys to the chosen one, and speed of the
 }

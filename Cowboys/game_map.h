@@ -1,7 +1,7 @@
 #ifndef GAME_MAP_H
 #define GAME_MAP_H
 
-#include "cowboy.h"
+#include "objects.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,7 +10,7 @@ extern "C" {
 typedef struct {
     cowboy_t cowboy_left;
     cowboy_t cowboy_right;
-    //object_manager_t object_manager;
+    object_manager_t object_manager;
     int bullet_speed;
 } game_map_t; 
 

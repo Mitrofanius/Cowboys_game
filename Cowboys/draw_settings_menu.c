@@ -1,5 +1,5 @@
 
-#include "draw_settings_menu.h"
+#include "draw.h"
 
 void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer,
                         font_descriptor_t *font_descriptor, cowboy_t *cowboy_left,
@@ -12,6 +12,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         frame_buffer[i] = 0xCCCE;
     }
+
 
     // left player color settings
     if (choice_button == PLAYER_LEFT_COLOUR)
@@ -26,6 +27,8 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     draw_rectangle(frame_buffer, 280, 29, 42, 42, 0, C_DARK_ORANGE, C_DARK_ORANGE);
     draw_rectangle(frame_buffer, 331, 29, 42, 42, 0, C_PINK, C_PINK);
     draw_rectangle(frame_buffer, 382, 29, 42, 42, 0, C_PURPLE, C_PURPLE);
+
+
     // Right player color settings
     if (choice_button == PLAYER_RIGHT_COLOUR)
     {
@@ -40,27 +43,29 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     draw_rectangle(frame_buffer, 331, 105, 42, 42, 0, C_PINK, C_PINK);
     draw_rectangle(frame_buffer, 382, 105, 42, 42, 0, C_PURPLE, C_PURPLE);
 
+
+    /* Bullet speed settings */
     if (choice_button == BULLET_SPEED)
     {
-        draw_rectangle(frame_buffer, 57, 174, 134, 52, 3, 0x9CF3, 0x9CF3);
+        draw_rectangle(frame_buffer, 52, 174, 134, 52, 3, 0x9CF3, 0x9CF3);
     }
     else
     {
-        draw_rectangle(frame_buffer, 57, 174, 134, 52, 3, 0x49A5, 0x49A5);
+        draw_rectangle(frame_buffer, 52, 174, 134, 52, 3, 0x49A5, 0x49A5);
     }
     draw_char(frame_buffer, font_descriptor, 59, 176, 'M', CHAR_SCALE, 0xFFFF);
-    draw_char(frame_buffer, font_descriptor, 103, 176, 'P', CHAR_SCALE, 0xFFFF);
+    draw_char(frame_buffer, font_descriptor, 108, 176, 'P', CHAR_SCALE, 0xFFFF);
     draw_char(frame_buffer, font_descriptor, 147, 176, 'H', CHAR_SCALE, 0xFFFF);
     draw_rectangle(frame_buffer, 196, 176, 48, 48, 3, C_WHITE, 0xCCCE);
     draw_rectangle(frame_buffer, 241, 176, 48, 48, 3, C_WHITE, 0xCCCE);
     draw_rectangle(frame_buffer, 286, 176, 48, 48, 3, C_WHITE, 0xCCCE);
     draw_rectangle(frame_buffer, 331, 176, 48, 48, 3, C_WHITE, 0xCCCE);
     draw_rectangle(frame_buffer, 376, 176, 48, 48, 3, C_WHITE, 0xCCCE);
-
     for (int i = 0; i <= choice_bullet_speed; i++)
     {
         draw_rectangle(frame_buffer, 199 + i * 45, 179, 42, 42, 0, 0x9CF3, 0x9CF3);
     }
+    
 
     /* BACK rectangle */
     if (choice_button == BACK)

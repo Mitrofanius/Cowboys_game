@@ -1,5 +1,5 @@
 
-#include "two_players_game.h"
+#include "scenes.h"
 
 void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {   
@@ -21,7 +21,7 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         .cowboy_right.state = AIMING,
     };
 
-    ///TODO: setup player's setting colours from settings, bullet speed
+    /* Load current settings from the map */
     game_map.cowboy_left.colour = settings->player_left_color;
     game_map.cowboy_right.colour = settings->player_right_color;
     game_map.bullet_speed = settings->bullet_speed;

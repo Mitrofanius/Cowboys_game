@@ -1,5 +1,5 @@
 
-#include "one_player_game.h"
+#include "scenes.h"
 
 void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {
@@ -33,6 +33,8 @@ void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame
         // {
         //     fire
         // }
+
+        //update bot
 
         draw_one_player_game(parlcd_mem_base, frame_buffer, font_descriptor);
     }

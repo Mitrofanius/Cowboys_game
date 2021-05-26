@@ -1,5 +1,5 @@
 
-#include "draw_scene_animation.h"
+#include "draw.h"
 
 void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
 {   

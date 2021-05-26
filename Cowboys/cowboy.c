@@ -1,2 +1,0 @@
-
-#include "cowboy.h"

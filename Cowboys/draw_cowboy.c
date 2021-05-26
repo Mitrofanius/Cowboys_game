@@ -1,4 +1,4 @@
-#include "draw_cowboy.h"
+#include "draw.h"
 
 unsigned short cowboy_aiming_left[] = {
     __NO__, __NO__, __NO__, __NO__, C_BROWN, C_BROWN, __NO__, C_BROWN, C_BROWN, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__,
