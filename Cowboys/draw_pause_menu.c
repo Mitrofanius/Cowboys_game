@@ -7,7 +7,7 @@ void draw_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffe
     /* Background */
     for (i = 0; i < 320 * 480; i++)
     {
-        frame_buffer[i] = 0xCCCE;
+        frame_buffer[i] = 0xBC06;
     }
 
 

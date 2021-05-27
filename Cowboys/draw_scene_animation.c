@@ -13,7 +13,7 @@ void draw_loading_scene(unsigned char *parlcd_mem_base, unsigned short *frame_bu
         /* Background */
         for (k = 0; k < 320 * 480; k++)
         {
-            frame_buffer[k] = 0xCCCE;
+            frame_buffer[k] = 0xBC06;
         }
         /* Loading rectangle */
         draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 173, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
@@ -97,7 +97,7 @@ void draw_closing_scene(unsigned char *parlcd_mem_base, unsigned short *frame_bu
         /* Background */
         for (k = 0; k < 320 * 480; k++)
         {
-            frame_buffer[k] = 0xCCCE;
+            frame_buffer[k] = 0xBC06;
         }
         /* Loading rectangle */
         draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 173, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);

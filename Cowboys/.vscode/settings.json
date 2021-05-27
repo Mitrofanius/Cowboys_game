@@ -10,6 +10,7 @@
         "settings_menu.h": "c",
         "draw_settings_menu.h": "c",
         "input_catcher.h": "c",
-        "pause_menu.h": "c"
+        "pause_menu.h": "c",
+        "draw.h": "c"
     }
 }

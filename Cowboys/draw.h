@@ -26,6 +26,27 @@ extern "C"
 #define RUNNING 1
 #define DEAD 2
 
+#define COWBOY_LEFT_X 15
+#define COWBOY_LEFT_Y 130
+#define COWBOY_RIGHT_X 405
+#define COWBOY_RIGHT_Y 130
+
+#define COWBOY_DEAD_WIDTH 18
+#define COWBOY_DEAD_HEIGHT 15
+#define COWBOY_RUNNING_WIDTH 14
+#define COWBOY_RUNNING_HEIGHT 17
+#define COWBOY_AIMING_WIDTH 20
+#define COWBOY_AIMING_HEIGHT 17
+
+#define BARREL_WIDTH 11
+#define BARREL_HEIGHT 13
+#define STONE_WIDTH 10
+#define STONE_HEIGHT 9
+#define CACTUS_WIDTH 10
+#define CACTUS_HEIGHT 13
+#define BULLET_WIDTH 4
+#define BULLET_HEIGHT 4
+
 #define LEFT 0
 #define RIGHT 1
 
@@ -64,18 +85,22 @@ extern "C"
                             cowboy_t *cowboy_right, unsigned char choice_button,
                             unsigned char choice_left_player_color, unsigned char choice_right_player_color, int choice_bullet_speed);
 
-    void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor);
+    void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer);
 
-    void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map);
+    void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);
 
-    void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, cowboy_t *cowboy, unsigned short scale);
+    void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale);
 
     void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, object_manager_t *object_manager, int scale);
 
     void draw_cactus(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cactus_t *cactus, int scale);
+
     void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, bullet_t *bullet, int scale);
+
     void draw_stone(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, stone_t *stone, int scale);
+
     void draw_barrel(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, barrel_t *barrel, int scale);
+
     void draw_game_map(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, int scale);
 
 #ifdef __cplusplus

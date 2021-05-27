@@ -10,7 +10,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     /* Background */
     for (i = 0; i < 320 * 480; i++)
     {
-        frame_buffer[i] = 0xCCCE;
+        frame_buffer[i] = 0xBC06;
     }
 
 
@@ -19,7 +19,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         draw_rectangle(frame_buffer, 54, 21, 66, 57, 3, 0x9CF3, 0x9CF3);
     }
-    draw_cowboy(parlcd_mem_base, frame_buffer, font_descriptor, cowboy_left, 3);
+    draw_cowboy(parlcd_mem_base, frame_buffer, cowboy_left, 3);
     draw_rectangle(frame_buffer, 124 + 51 * choice_left_player_color, 26, 48, 48, 3, C_WHITE, C_WHITE);
     draw_rectangle(frame_buffer, 127, 29, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 29, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
@@ -34,7 +34,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         draw_rectangle(frame_buffer, 54, 97, 66, 57, 3, 0x9CF3, 0x9CF3);
     }
-    draw_cowboy(parlcd_mem_base, frame_buffer, font_descriptor, cowboy_right, 3);
+    draw_cowboy(parlcd_mem_base, frame_buffer, cowboy_right, 3);
     draw_rectangle(frame_buffer, 124 + 51 * choice_right_player_color, 102, 48, 48, 3, C_WHITE, C_WHITE);
     draw_rectangle(frame_buffer, 127, 105, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 105, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
@@ -51,7 +51,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     }
     else
     {
-        draw_rectangle(frame_buffer, 52, 174, 134, 52, 3, 0x49A5, 0x49A5);
+        draw_rectangle(frame_buffer, 52, 174, 134, 52, 3, 0x49A5, 0x9B01);
     }
     draw_char(frame_buffer, font_descriptor, 59, 176, 'M', CHAR_SCALE, 0xFFFF);
     draw_char(frame_buffer, font_descriptor, 108, 176, 'P', CHAR_SCALE, 0xFFFF);
@@ -74,7 +74,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     }
     else
     {
-        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 247, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x49A5);
+        draw_rectangle(frame_buffer, REGTANGL_LEFT_UP_X, 247, REGTANGLE_WIDTH, REGTANGLE_HEIGHT, REGTANGLE_FRAME_HEIGHT, 0, 0x9B01);
     }
 
     /* EXIT label */
