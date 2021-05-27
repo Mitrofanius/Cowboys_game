@@ -10,6 +10,7 @@ typedef struct
     unsigned short player_left_color;
     unsigned short player_right_color;
     int bullet_speed;
+    unsigned short bullet_color;
 } settings_t;
 
 #ifdef __cplusplus

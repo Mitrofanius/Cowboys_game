@@ -8,13 +8,15 @@
 
 #include "font_types.h"
 #include "game_map.h"
-#include "colours.h"
+#include "colors.h"
 #include "mzapo_parlcd.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
+
+#define SCALE 3
 
 #define REGTANGL_LEFT_UP_X 57
 #define REGTANGLE_FRAME_HEIGHT 5
@@ -59,8 +61,8 @@ extern "C"
 
 #define PLAYER_LEFT_COLOUR 0
 #define PLAYER_RIGHT_COLOUR 1
-#define BULLET_SPEED 2
-#define BACK 3
+#define BULLET_COLOR 2
+#define BULLET_SPEED 3
 
     void draw_char(unsigned short *frame_buffer, font_descriptor_t *font_descriptor, int x, int y, char ch, unsigned char scale, unsigned short color);
 
@@ -82,8 +84,9 @@ extern "C"
 
     void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer,
                             font_descriptor_t *font_descriptor, cowboy_t *cowboy_left,
-                            cowboy_t *cowboy_right, unsigned char choice_button,
-                            unsigned char choice_left_player_color, unsigned char choice_right_player_color, int choice_bullet_speed);
+                            cowboy_t *cowboy_right, bullet_t *bullet, unsigned char choice_button,
+                            unsigned char choice_left_player_color, unsigned char choice_right_player_color, 
+                            unsigned char choice_bullet_color, int choice_bullet_speed);
 
     void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer);
 

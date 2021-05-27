@@ -10,7 +10,7 @@ game_map_t load_default_game()
             .y = COWBOY_LEFT_Y,
             .width = COWBOY_AIMING_WIDTH,
             .height = COWBOY_AIMING_HEIGHT,
-            .colour = C_LIGHT_BLUE,
+            .color = C_LIGHT_BLUE,
             .side = LEFT,
             .state = AIMING,
         },
@@ -20,7 +20,7 @@ game_map_t load_default_game()
             .y = COWBOY_RIGHT_Y,
             .width = COWBOY_AIMING_WIDTH,
             .height = COWBOY_AIMING_HEIGHT,
-            .colour = C_RED,
+            .color = C_RED,
             .side = RIGHT,
             .state = AIMING,
         },
@@ -62,8 +62,9 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
     game_map_t game_map = load_default_game();
 
     /* Load current settings into the map */
-    game_map.cowboy_left.colour = settings->player_left_color;
-    game_map.cowboy_right.colour = settings->player_right_color;
+    game_map.cowboy_left.color = settings->player_left_color;
+    game_map.cowboy_right.color = settings->player_right_color;
+    game_map.bullet_color = settings->bullet_color;
     game_map.bullet_speed = settings->bullet_speed;
 
     draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
@@ -95,12 +96,16 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         }
         else if (ch == 'd' && game_map.cowboy_left.state == AIMING)
         {
-            game_map.object_manager.bullets[game_map.object_manager.bullets_length].speed = game_map.bullet_speed;
-            game_map.object_manager.bullets[game_map.object_manager.bullets_length].x = game_map.cowboy_left.x + COWBOY_AIMING_WIDTH * 3;
-            game_map.object_manager.bullets[game_map.object_manager.bullets_length].y = game_map.cowboy_left.y + 7 * 3;
-            game_map.object_manager.bullets[game_map.object_manager.bullets_length].width = BULLET_WIDTH;
-            game_map.object_manager.bullets[game_map.object_manager.bullets_length].height = BULLET_HEIGHT;
-            game_map.object_manager.bullets_length++;
+            if (game_map.object_manager.bullets_length < BULLET_AMOUNT)
+            {
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].x = game_map.cowboy_left.x + COWBOY_AIMING_WIDTH * SCALE;
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].y = game_map.cowboy_left.y + 7 * SCALE;
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].width = BULLET_WIDTH;
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].height = BULLET_HEIGHT;
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].color = game_map.bullet_color;
+                game_map.object_manager.bullets[game_map.object_manager.bullets_length].speed = game_map.bullet_speed;
+                game_map.object_manager.bullets_length++;
+            }
         }
         else if (ch == 'o')
         {

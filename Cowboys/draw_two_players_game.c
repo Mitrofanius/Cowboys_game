@@ -10,7 +10,7 @@ void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame
         frame_buffer[i] = 0xBC06;
     }
 
-    draw_game_map(parlcd_mem_base, frame_buffer, game_map, 3);
+    draw_game_map(parlcd_mem_base, frame_buffer, game_map, SCALE);
 
     /* Sends info to screen */
     parlcd_write_cmd(parlcd_mem_base, 0x2c);

@@ -9,6 +9,7 @@ void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, fo
     settings_t settings = {
         .player_left_color = C_RED,
         .player_right_color = C_LIGHT_BLUE,
+        .bullet_color = C_LIGHT_GRAY,
         .bullet_speed = 10};
 
     while (true)

@@ -102,8 +102,7 @@ void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, b
         {
             if (bullet_pixels[i * bullet->width + j] != __NO__)
             {
-                //draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, bullet_pixels[i * bullet->width + j]);
-                draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, C_LIGHT_GREEN);
+                draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, bullet->color);
             }
         }
     }

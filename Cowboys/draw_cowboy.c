@@ -130,7 +130,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                 if (cowboy_aiming_left[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_aiming_left[i * cowboy->width + j] != __NO__)
                 {
@@ -141,7 +141,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                 if (cowboy_running_left[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_running_left[i * cowboy->width + j] != __NO__)
                 {
@@ -152,7 +152,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                 if (cowboy_dead_left[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_dead_left[i * cowboy->width + j] != __NO__)
                 {
@@ -163,7 +163,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                 if (cowboy_aiming_right[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_aiming_right[i * cowboy->width + j] != __NO__)
                 {
@@ -174,7 +174,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                  if (cowboy_running_right[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_running_right[i * cowboy->width + j] != __NO__)
                 {
@@ -185,7 +185,7 @@ void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
             {
                  if (cowboy_dead_right[i * cowboy->width + j] == NOT_SPECIFIED)
                 {
-                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->colour);
+                    draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, cowboy->color);
                 }
                 else if (cowboy_dead_right[i * cowboy->width + j] != __NO__)
                 {
