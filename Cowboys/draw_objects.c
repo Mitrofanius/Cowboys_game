@@ -55,24 +55,24 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
 {
     int i;
 
-    for (i = 0; i < object_manager->barrel_length; i++)
+    for (i = 0; i < object_manager->barrels_length; i++)
     {
-        draw_barrel(parlcd_mem_base, frame_buffer, &(object_manager->barrel[i]), scale);
+        draw_barrel(parlcd_mem_base, frame_buffer, &(object_manager->barrels[i]), scale);
     }
 
-    for (i = 0; i < object_manager->stone_length; i++)
+    for (i = 0; i < object_manager->stones_length; i++)
     {
-        draw_stone(parlcd_mem_base, frame_buffer, &(object_manager->stone[i]), scale);
+        draw_stone(parlcd_mem_base, frame_buffer, &(object_manager->stones[i]), scale);
     }
 
-    for (i = 0; i < object_manager->cactus_length; i++)
+    for (i = 0; i < object_manager->cactuses_length; i++)
     {
-        draw_cactus(parlcd_mem_base, frame_buffer, &(object_manager->cactus[i]), scale);
+        draw_cactus(parlcd_mem_base, frame_buffer, &(object_manager->cactuses[i]), scale);
     }
 
-    for (i = 0; i < object_manager->bullet_length; i++)
+    for (i = 0; i < object_manager->bullets_length; i++)
     {
-        draw_bullet(parlcd_mem_base, frame_buffer, &(object_manager->bullet[i]), scale);
+        draw_bullet(parlcd_mem_base, frame_buffer, &(object_manager->bullets[i]), scale);
     }
 }
 
@@ -102,7 +102,8 @@ void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, b
         {
             if (bullet_pixels[i * bullet->width + j] != __NO__)
             {
-                draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, bullet_pixels[i * bullet->width + j]);
+                //draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, bullet_pixels[i * bullet->width + j]);
+                draw_pixel_scale(frame_buffer, bullet->x + scale * j, bullet->y + scale * i, scale, C_LIGHT_GREEN);
             }
         }
     }

@@ -52,17 +52,17 @@ typedef struct
 
 typedef struct
 {
-    cactus_t cactus[5];
-    unsigned char cactus_length;
+    cactus_t cactuses[5];
+    unsigned char cactuses_length;
 
-    barrel_t barrel[5];
-    unsigned char barrel_length;
+    barrel_t barrels[5];
+    unsigned char barrels_length;
 
-    stone_t stone[5];
-    unsigned char stone_length;
+    stone_t stones[5];
+    unsigned char stones_length;
     
-    bullet_t bullet[4];
-    unsigned char bullet_length;
+    bullet_t bullets[4];
+    unsigned char bullets_length;
 } object_manager_t;
 
 

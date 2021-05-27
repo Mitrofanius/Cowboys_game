@@ -1,7 +1,7 @@
 
 #include "scenes.h"
 
-game_map_t load_default_game() 
+game_map_t load_default_game()
 {
     game_map_t game_map = {
         .cowboy_left = {
@@ -24,20 +24,34 @@ game_map_t load_default_game()
             .state = AIMING,
         },
 
-        .object_manager.barrel_length = 1,
-        .object_manager.barrel[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT},
+        .object_manager.barrels_length = 1,
+        .object_manager.barrels[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT},
 
-        .object_manager.stone_length = 1,
-        .object_manager.stone[0] = {.x = 150, .y = 150, .width = STONE_WIDTH, .height = STONE_HEIGHT},
+        .object_manager.stones_length = 1,
+        .object_manager.stones[0] = {.x = 150, .y = 150, .width = STONE_WIDTH, .height = STONE_HEIGHT},
 
-        .object_manager.cactus_length = 1,
-        .object_manager.cactus[0] = {.x = 200, .y = 50, .width = CACTUS_WIDTH, .height = CACTUS_HEIGHT},
-
-        .object_manager.bullet_length = 1,
-        .object_manager.bullet[0] = {.x = 50, .y = 50, .width = BULLET_WIDTH, .height = BULLET_HEIGHT, .speed = BULLET_SPEED}
+        .object_manager.cactuses_length = 1,
+        .object_manager.cactuses[0] = {.x = 200, .y = 50, .width = CACTUS_WIDTH, .height = CACTUS_HEIGHT}
     };
 
     return game_map;
+}
+
+void update_bullets(bullet_t *bullets, unsigned short length)
+{
+    for (int i = 0; i < length; i++)
+    {
+        //check collision update in there is no collision with objects, cowboy and on the map
+        bullets[i].x += bullets[i].speed;
+    }
+    
+}
+
+void update_states(game_map_t *game_map)
+{
+    //update_cowboy();
+    //update_cowboy();
+    update_bullets(game_map->object_manager.bullets, game_map->object_manager.bullets_length);
 }
 
 void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
@@ -51,30 +65,12 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
 
     draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
 
-for (int i = 0; i < 100; i++)
-{
-    game_map.cowboy_left.width = COWBOY_AIMING_WIDTH;
-        game_map.cowboy_left.height = COWBOY_AIMING_HEIGHT;
-        game_map.cowboy_left.state = AIMING;
-        draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
-        sleep(1);
-        game_map.cowboy_left.width = COWBOY_RUNNING_WIDTH;
-        game_map.cowboy_left.height = COWBOY_RUNNING_HEIGHT;
-        game_map.cowboy_left.state = RUNNING;
-        draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
-        sleep(1);
-        game_map.cowboy_left.width = COWBOY_DEAD_WIDTH;
-        game_map.cowboy_left.height = COWBOY_DEAD_HEIGHT;
-        game_map.cowboy_left.state = DEAD;
-        draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
-        sleep(1);
-}
-
-
     unsigned char ch, choice;
     while (true)
     {
         ch = getch(stdin);
+
+        update_states(&game_map);
 
         if (ch == ESCAPE)
         {
@@ -92,6 +88,13 @@ for (int i = 0; i < 100; i++)
         else if (ch == 's')
         {
             game_map.cowboy_left.y += 10;
+        }
+        else if (ch == 'd' && game_map.cowboy_left.state == AIMING) {
+            game_map.object_manager.bullets[game_map.object_manager.bullets_length].x = game_map.cowboy_left.x + COWBOY_AIMING_WIDTH * 3;
+            game_map.object_manager.bullets[game_map.object_manager.bullets_length].y = game_map.cowboy_left.y + 7 * 3;
+            game_map.object_manager.bullets[game_map.object_manager.bullets_length].width = BULLET_WIDTH;
+            game_map.object_manager.bullets[game_map.object_manager.bullets_length].height = BULLET_HEIGHT;
+            game_map.object_manager.bullets_length++;
         }
         else if (ch == 'o')
         {
