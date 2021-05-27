@@ -2,15 +2,14 @@
 #include "game.h"
 
 void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
-{   
+{
     unsigned char choice;
     draw_loading_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 
     settings_t settings = {
         .player_left_color = C_RED,
         .player_right_color = C_LIGHT_BLUE,
-        .bullet_speed = 10
-    };
+        .bullet_speed = 10};
 
     while (true)
     {

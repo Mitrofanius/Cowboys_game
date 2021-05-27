@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <termios.h>
+#include <sys/time.h>
+#include <sys/types.h>
 
 #define ESCAPE 27
 
