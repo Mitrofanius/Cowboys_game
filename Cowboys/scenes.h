@@ -3,6 +3,8 @@
 
 #include "draw.h"
 #include "input_catcher.h"
+#include <time.h>
+#include "collision.h"
 #include "settings.h"
 
 #ifdef __cplusplus

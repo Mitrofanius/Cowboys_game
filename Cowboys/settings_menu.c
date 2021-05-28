@@ -28,7 +28,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
         .y = 176,
         .width = BULLET_WIDTH,
         .height = BULLET_HEIGHT,
-        .color = C_LIGHT_GRAY,
+        .color = settings->bullet_color,
         .speed = 0};
 
     unsigned char choice_left_player_color = FIRST_CHOICE;
