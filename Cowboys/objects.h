@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
@@ -34,7 +35,7 @@
 #define BARREL_AMOUNT 5
 #define STONE_AMOUNT 5
 #define CACTUS_AMOUNT 5
-#define BULLET_AMOUNT 4
+#define BULLET_AMOUNT 8
 
 #define COWBOY_HEALTH 100
 
@@ -63,6 +64,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        bool is_active;
     } cactus_t;
 
     typedef struct
@@ -71,6 +73,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        bool is_active;
     } barrel_t;
 
     typedef struct
@@ -79,6 +82,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        bool is_active;
     } stone_t;
 
     typedef struct
@@ -88,7 +92,9 @@ extern "C"
         unsigned short width;
         unsigned short height;
         unsigned short color;
-        int speed;
+        bool is_active;
+        int speed_x;
+        int speed_y;
     } bullet_t;
 
     typedef struct

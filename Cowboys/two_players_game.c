@@ -18,14 +18,16 @@ game_map_t load_default_game()
 
         .cowboy_right = {.x = COWBOY_RIGHT_X, .y = COWBOY_RIGHT_Y, .width = COWBOY_AIMING_WIDTH, .height = COWBOY_AIMING_HEIGHT, .color = C_RED, .side = RIGHT, .state = AIMING, .health = COWBOY_HEALTH, .direction = DOWN, .bullets = 2},
 
-        .object_manager.barrels_length = 1,
-        .object_manager.barrels[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT},
+        .object_manager.barrels_length = BARREL_AMOUNT,
+        .object_manager.barrels[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT, .is_active = true},
 
-        .object_manager.stones_length = 1,
-        .object_manager.stones[0] = {.x = 150, .y = 150, .width = STONE_WIDTH, .height = STONE_HEIGHT},
+        .object_manager.stones_length = STONE_AMOUNT,
+        .object_manager.stones[0] = {.x = 150, .y = 150, .width = STONE_WIDTH, .height = STONE_HEIGHT, .is_active = true},
 
-        .object_manager.cactuses_length = 1,
-        .object_manager.cactuses[0] = {.x = 200, .y = 50, .width = CACTUS_WIDTH, .height = CACTUS_HEIGHT}};
+        .object_manager.cactuses_length = CACTUS_AMOUNT,
+        .object_manager.cactuses[0] = {.x = 200, .y = 50, .width = CACTUS_WIDTH, .height = CACTUS_HEIGHT, .is_active = true},
+
+        .object_manager.bullets_length = BULLET_AMOUNT};
 
     return game_map;
 }
@@ -35,7 +37,8 @@ void update_bullets(bullet_t *bullets, unsigned short length)
     for (int i = 0; i < length; i++)
     {
         //check collision update in there is no collision with objects, cowboy and on the map
-        bullets[i].x += bullets[i].speed;
+        bullets[i].x += bullets[i].speed_x;
+        bullets[i].y += bullets[i].speed_y;
     }
 }
 
@@ -43,7 +46,7 @@ void update_cowboy(cowboy_t *cowboy)
 {
     if (cowboy->direction == UP)
     {
-        if (isOnMap(cowboy, SCALE))
+        if (isCowboyOnMap(cowboy))
         {
             cowboy->y -= COWBOY_RELOCATION;
         }
@@ -54,7 +57,7 @@ void update_cowboy(cowboy_t *cowboy)
     }
     else if (cowboy->direction == DOWN)
     {
-        if (isOnMap(cowboy, SCALE))
+        if (isCowboyOnMap(cowboy))
         {
             cowboy->y += COWBOY_RELOCATION;
         }
@@ -70,49 +73,64 @@ void update_states(game_map_t *game_map)
     update_cowboy(&(game_map->cowboy_left));
     update_cowboy(&(game_map->cowboy_right));
     update_bullets(game_map->object_manager.bullets, game_map->object_manager.bullets_length);
+    check_collisions(game_map);
 }
 
 void fire_cowboy_left(game_map_t *game_map)
 {
-    if (game_map->cowboy_left.bullets > 0 && game_map->object_manager.bullets_length < BULLET_AMOUNT)
+    if (game_map->cowboy_left.bullets > 0)
     {
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].x = game_map->cowboy_left.x + COWBOY_AIMING_WIDTH * SCALE;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].y = game_map->cowboy_left.y + 7 * SCALE;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].width = BULLET_WIDTH;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].height = BULLET_HEIGHT;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].color = game_map->bullet_color;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].speed = game_map->bullet_speed;
-        game_map->object_manager.bullets_length++;
-        game_map->cowboy_left.bullets--;
-
-        if (game_map->cowboy_left.bullets == 0)
+        for (int i = 0; i < game_map->object_manager.bullets_length; i++)
         {
-            game_map->cowboy_left.state = RUNNING;
-            game_map->cowboy_left.width = COWBOY_RUNNING_WIDTH;
-            game_map->cowboy_left.height = COWBOY_RUNNING_HEIGHT;
+            if (!(game_map->object_manager.bullets[i].is_active))
+            {
+                game_map->object_manager.bullets[i].x = game_map->cowboy_left.x + COWBOY_AIMING_WIDTH * SCALE;
+                game_map->object_manager.bullets[i].y = game_map->cowboy_left.y + 7 * SCALE;
+                game_map->object_manager.bullets[i].width = BULLET_WIDTH;
+                game_map->object_manager.bullets[i].height = BULLET_HEIGHT;
+                game_map->object_manager.bullets[i].color = game_map->bullet_color;
+                game_map->object_manager.bullets[i].speed_x = game_map->bullet_speed;
+                game_map->cowboy_left.bullets--;
+                game_map->object_manager.bullets[i].is_active = true;
+
+                if (game_map->cowboy_left.bullets == 0)
+                {
+                    game_map->cowboy_left.state = RUNNING;
+                    game_map->cowboy_left.width = COWBOY_RUNNING_WIDTH;
+                    game_map->cowboy_left.height = COWBOY_RUNNING_HEIGHT;
+                }
+                break;
+            }
         }
     }
 }
 
 void fire_cowboy_right(game_map_t *game_map)
 {
-    if (game_map->cowboy_right.bullets > 0 && game_map->object_manager.bullets_length < BULLET_AMOUNT)
+    if (game_map->cowboy_right.bullets > 0)
     {
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].x = game_map->cowboy_right.x - BULLET_WIDTH * SCALE;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].y = game_map->cowboy_right.y + 7 * SCALE;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].width = BULLET_WIDTH;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].height = BULLET_HEIGHT;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].color = game_map->bullet_color;
-        game_map->object_manager.bullets[game_map->object_manager.bullets_length].speed = -game_map->bullet_speed;
-        game_map->object_manager.bullets_length++;
-        game_map->cowboy_right.bullets--;
-
-        if (game_map->cowboy_right.bullets == 0)
+        for (int i = 0; i < game_map->object_manager.bullets_length; i++)
         {
-            game_map->cowboy_right.x += (COWBOY_AIMING_WIDTH - COWBOY_RUNNING_WIDTH) * SCALE;
-            game_map->cowboy_right.state = RUNNING;
-            game_map->cowboy_right.width = COWBOY_RUNNING_WIDTH;
-            game_map->cowboy_right.height = COWBOY_RUNNING_HEIGHT;
+            if (!(game_map->object_manager.bullets[i].is_active))
+            {
+                game_map->object_manager.bullets[i].x = game_map->cowboy_right.x - BULLET_WIDTH * SCALE;
+                game_map->object_manager.bullets[i].y = game_map->cowboy_right.y + 7 * SCALE;
+                game_map->object_manager.bullets[i].width = BULLET_WIDTH;
+                game_map->object_manager.bullets[i].height = BULLET_HEIGHT;
+                game_map->object_manager.bullets[i].color = game_map->bullet_color;
+                game_map->object_manager.bullets[i].speed_x = -game_map->bullet_speed;
+                game_map->cowboy_right.bullets--;
+                game_map->object_manager.bullets[i].is_active = true;
+
+                if (game_map->cowboy_right.bullets == 0)
+                {
+                    game_map->cowboy_right.x += (COWBOY_AIMING_WIDTH - COWBOY_RUNNING_WIDTH) * SCALE;
+                    game_map->cowboy_right.state = RUNNING;
+                    game_map->cowboy_right.width = COWBOY_RUNNING_WIDTH;
+                    game_map->cowboy_right.height = COWBOY_RUNNING_HEIGHT;
+                }
+                break;
+            }
         }
     }
 }
@@ -130,7 +148,7 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
     struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 10000};
     game_map_t game_map = load_default_game();
     load_settings(&game_map, settings);
-    
+
     unsigned char ch, choice;
     draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
     while (true)

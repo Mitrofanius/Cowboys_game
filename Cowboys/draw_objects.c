@@ -13,8 +13,7 @@ unsigned short barrel_pixels[] = {
     C_DARK_ORANGE, C_SKIN, C_DARK_ORANGE, C_SKIN, C_SKIN, C_SKIN, C_DARK_ORANGE, C_SKIN, C_DARK_ORANGE, C_SKIN, C_DARK_ORANGE,
     C_BLACK, C_DARK_ORANGE, C_DARK_ORANGE, C_SKIN, C_SKIN, C_SKIN, C_DARK_ORANGE, C_SKIN, C_DARK_ORANGE, C_DARK_ORANGE, C_BLACK,
     __NO__, C_BLACK, C_DARK_ORANGE, C_DARK_ORANGE, C_DARK_ORANGE, C_DARK_ORANGE, C_DARK_ORANGE, C_DARK_ORANGE, C_DARK_ORANGE, C_BLACK, __NO__,
-    __NO__, __NO__, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, __NO__, __NO__
-};
+    __NO__, __NO__, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_BLACK, __NO__, __NO__};
 
 unsigned short stone_pixels[] = {
     __NO__, __NO__, __NO__, __NO__, C_LIGHT_GRAY, C_LIGHT_GRAY, __NO__, __NO__, __NO__, __NO__,
@@ -25,15 +24,13 @@ unsigned short stone_pixels[] = {
     C_LIGHT_GRAY, C_WHITE, C_WHITE, C_WHITE, C_WHITE, C_LIGHT_GRAY, C_WHITE, C_WHITE, C_LIGHT_GRAY, C_LIGHT_GRAY,
     C_LIGHT_GRAY, C_WHITE, C_WHITE, C_WHITE, C_LIGHT_GRAY, C_BLACK, C_WHITE, C_WHITE, C_LIGHT_GRAY, C_LIGHT_GRAY,
     __NO__, C_BLACK, C_WHITE, C_WHITE, C_LIGHT_GRAY, C_BLACK, C_BLACK, C_LIGHT_GRAY, C_LIGHT_GRAY, C_BLACK,
-    __NO__, __NO__, C_BLACK, C_BLACK, C_BLACK, __NO__, __NO__, C_BLACK, C_BLACK, __NO__
-};
+    __NO__, __NO__, C_BLACK, C_BLACK, C_BLACK, __NO__, __NO__, C_BLACK, C_BLACK, __NO__};
 
 unsigned short bullet_pixels[] = {
     __NO__, C_LIGHT_GRAY, C_LIGHT_GRAY, __NO__,
     C_LIGHT_GRAY, C_LIGHT_GRAY, C_LIGHT_GRAY, C_LIGHT_GRAY,
     C_LIGHT_GRAY, C_LIGHT_GRAY, C_LIGHT_GRAY, C_LIGHT_GRAY,
-    __NO__, C_LIGHT_GRAY, C_LIGHT_GRAY, __NO__
-};
+    __NO__, C_LIGHT_GRAY, C_LIGHT_GRAY, __NO__};
 
 unsigned short cactus_pixels[] = {
     __NO__, __NO__, __NO__, __NO__, C_DARK_GREEN, C_DARK_GREEN, __NO__, __NO__, __NO__, __NO__,
@@ -48,8 +45,7 @@ unsigned short cactus_pixels[] = {
     C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN, C_LIGHT_GREEN,
     C_BLACK, C_BLACK, C_BLACK, C_BLACK, C_LIGHT_GREEN, C_LIGHT_GREEN, C_BLACK, C_BLACK, C_BLACK, C_BLACK,
     __NO__, __NO__, __NO__, __NO__, C_LIGHT_GREEN, C_LIGHT_GREEN, __NO__, __NO__, __NO__, __NO__,
-    __NO__, __NO__, __NO__, __NO__, C_BLACK, C_BLACK, __NO__, __NO__, __NO__, __NO__
-};
+    __NO__, __NO__, __NO__, __NO__, C_BLACK, C_BLACK, __NO__, __NO__, __NO__, __NO__};
 
 void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, object_manager_t *object_manager, int scale)
 {
@@ -57,22 +53,34 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
 
     for (i = 0; i < object_manager->barrels_length; i++)
     {
-        draw_barrel(parlcd_mem_base, frame_buffer, &(object_manager->barrels[i]), scale);
+        if (object_manager->barrels[i].is_active)
+        {
+            draw_barrel(parlcd_mem_base, frame_buffer, &(object_manager->barrels[i]), scale);
+        }
     }
 
     for (i = 0; i < object_manager->stones_length; i++)
     {
-        draw_stone(parlcd_mem_base, frame_buffer, &(object_manager->stones[i]), scale);
+        if (object_manager->stones[i].is_active)
+        {
+            draw_stone(parlcd_mem_base, frame_buffer, &(object_manager->stones[i]), scale);
+        }
     }
 
     for (i = 0; i < object_manager->cactuses_length; i++)
     {
-        draw_cactus(parlcd_mem_base, frame_buffer, &(object_manager->cactuses[i]), scale);
+        if (object_manager->cactuses[i].is_active)
+        {
+            draw_cactus(parlcd_mem_base, frame_buffer, &(object_manager->cactuses[i]), scale);
+        }
     }
 
     for (i = 0; i < object_manager->bullets_length; i++)
     {
-        draw_bullet(parlcd_mem_base, frame_buffer, &(object_manager->bullets[i]), scale);
+        if (object_manager->bullets[i].is_active)
+        {
+            draw_bullet(parlcd_mem_base, frame_buffer, &(object_manager->bullets[i]), scale);
+        }
     }
 }
 

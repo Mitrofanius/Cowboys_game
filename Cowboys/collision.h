@@ -2,16 +2,25 @@
 #define COLLISION_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <stdbool.h>
 #include "objects.h"
+#include "game_map.h"
+#include "draw.h"
 
-bool isOnMap(cowboy_t *cowboy, unsigned char scale);
+    void check_collisions(game_map_t *game_map);
+    bool isCowboyOnMap(cowboy_t *cowboy);
+    bool isBulletOnMap(bullet_t *bullet);
+    void check_collision_with_cactuses(bullet_t *bullet, cactus_t *cactuses, unsigned char length);
+    void check_collision_with_stones(bullet_t *bullet, stone_t *stones, unsigned char length, game_map_t *game_map);
+    void check_collision_with_barrels(bullet_t *bullet, barrel_t *barrels, unsigned char length);
+    void generate_bullet_after_collision_with_stone(game_map_t *game_map, bullet_t *mother_bullet);
 
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*COLLISION_H*/
+#endif /*COLLISION_H*/

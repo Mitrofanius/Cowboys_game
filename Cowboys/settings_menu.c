@@ -29,7 +29,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
         .width = BULLET_WIDTH,
         .height = BULLET_HEIGHT,
         .color = settings->bullet_color,
-        .speed = 0};
+        .speed_x = 0};
 
     unsigned char choice_left_player_color = FIRST_CHOICE;
     switch (settings->player_left_color)
