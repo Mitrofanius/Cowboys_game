@@ -59,7 +59,6 @@ void generate_objects_on_greed(game_map_t *game_map)
             }
             else if (object_type == TYPE_STONE)
             {
-                game_map->array_of_free_places[number_of_block] = TYPE_STONE;
                 for (int i = 0; i < STONE_AMOUNT; i++)
                 {
                     if (!game_map->object_manager.stones[i].is_active)
