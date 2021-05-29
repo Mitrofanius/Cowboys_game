@@ -14,9 +14,9 @@ game_map_t load_default_game()
             .state = AIMING,
             .health = COWBOY_HEALTH,
             .direction = UP,
-            .bullets = 2},
+            .bullets = COWBOY_BULLET_AMOUNT},
 
-        .cowboy_right = {.x = COWBOY_RIGHT_X, .y = COWBOY_RIGHT_Y, .width = COWBOY_AIMING_WIDTH, .height = COWBOY_AIMING_HEIGHT, .color = C_RED, .side = RIGHT, .state = AIMING, .health = COWBOY_HEALTH, .direction = DOWN, .bullets = 2},
+        .cowboy_right = {.x = COWBOY_RIGHT_X, .y = COWBOY_RIGHT_Y, .width = COWBOY_AIMING_WIDTH, .height = COWBOY_AIMING_HEIGHT, .color = C_RED, .side = RIGHT, .state = AIMING, .health = COWBOY_HEALTH, .direction = DOWN, .bullets = COWBOY_BULLET_AMOUNT},
 
         .object_manager.barrels_length = BARREL_AMOUNT,
         .object_manager.barrels[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT, .is_active = true},
@@ -36,9 +36,11 @@ void update_bullets(bullet_t *bullets, unsigned short length)
 {
     for (int i = 0; i < length; i++)
     {
-        //check collision update in there is no collision with objects, cowboy and on the map
-        bullets[i].x += bullets[i].speed_x;
-        bullets[i].y += bullets[i].speed_y;
+        if (bullets[i].is_active)
+        {
+            bullets[i].x += bullets[i].speed_x;
+            bullets[i].y += bullets[i].speed_y;
+        }
     }
 }
 
@@ -148,18 +150,51 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
     struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 10000};
     game_map_t game_map = load_default_game();
     load_settings(&game_map, settings);
+    bool reload_pistols = false;
 
-    unsigned char ch, choice;
+    unsigned char ch, choice = RESUME;
     draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
     while (true)
     {
-        ch = getch(stdin);
+        if (game_map.cowboy_left.state == DEAD || game_map.cowboy_right.state == DEAD)
+        {
+            sleep(3);
+            break;
+        }
+        
+
+        if (game_map.cowboy_left.bullets == 0 && game_map.cowboy_right.bullets == 0)
+        {
+            reload_pistols = true;
+            for (int i = 0; i < game_map.object_manager.bullets_length; i++)
+            {
+                if (game_map.object_manager.bullets[i].is_active)
+                {
+                    reload_pistols = false;
+                }
+            }
+
+            if (reload_pistols)
+            {
+                game_map.cowboy_left.bullets = COWBOY_BULLET_AMOUNT;
+                game_map.cowboy_left.state = AIMING;
+                game_map.cowboy_left.width = COWBOY_AIMING_WIDTH;
+                game_map.cowboy_left.health = COWBOY_AIMING_HEIGHT;
+
+                game_map.cowboy_right.bullets = COWBOY_BULLET_AMOUNT;
+                game_map.cowboy_right.x = COWBOY_RIGHT_X;
+                game_map.cowboy_right.state = AIMING;
+                game_map.cowboy_right.width = COWBOY_AIMING_WIDTH;
+                game_map.cowboy_right.health = COWBOY_AIMING_HEIGHT;
+            }
+        }
 
         update_states(&game_map);
 
+        ch = getch(stdin);
         if (ch == ESCAPE)
         {
-            printf("ESCAPE");
+            printf("\n\n\n  PAUSE   \n\n\n");
             start_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, &choice);
             if (choice == MAIN_MENU)
             {

@@ -69,6 +69,8 @@ extern "C"
 
     void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale);
 
+    void draw_cowboy_helper_function(unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short *source_array, int i, int j, unsigned short scale);
+
     void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, object_manager_t *object_manager, int scale);
 
     void draw_cactus(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cactus_t *cactus, int scale);
@@ -80,6 +82,10 @@ extern "C"
     void draw_barrel(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, barrel_t *barrel, int scale);
 
     void draw_game_map(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, int scale);
+    
+    void draw_game_label(unsigned short *frame_buffer, unsigned char left_health, unsigned short left_color, unsigned char left_bullets,  unsigned char right_health, unsigned short right_color, unsigned char right_bullets);
+
+    void itoa(char string[], int number);
 
 #ifdef __cplusplus
 } /* extern "C"*/

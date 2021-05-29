@@ -6,7 +6,15 @@
 #define RUNNING 1
 #define DEAD 2
 
+#define BULLET_FIRE_POWER 10
+
+#define ANIMATION_TIME 1000
+
+#define ANIMATION_FREQUENCY 3
+
 #define COWBOY_RELOCATION 3
+
+#define COWBOY_BULLET_AMOUNT 2
 
 #define COWBOY_LEFT_X 15
 #define COWBOY_LEFT_Y 130
@@ -56,6 +64,7 @@ extern "C"
         unsigned char health;
         unsigned char direction;
         unsigned char bullets;
+        unsigned short animation;
     } cowboy_t;
 
     typedef struct

@@ -106,16 +106,16 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
     case 10:
         choice_bullet_speed = FIRST_CHOICE;
         break;
-    case 20:
+    case 15:
         choice_bullet_speed = SECOND_CHOICE;
         break;
-    case 30:
+    case 20:
         choice_bullet_speed = THIRD_CHOICE;
         break;
-    case 40:
+    case 25:
         choice_bullet_speed = FOURTH_CHOICE;
         break;
-    case 50:
+    case 30:
         choice_bullet_speed = FIFTH_CHOICE;
         break;
     }
@@ -269,16 +269,16 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
                 settings->bullet_speed = 10;
                 break;
             case SECOND_CHOICE:
-                settings->bullet_speed = 20;
+                settings->bullet_speed = 15;
                 break;
             case THIRD_CHOICE:
-                settings->bullet_speed = 30;
+                settings->bullet_speed = 20;
                 break;
             case FOURTH_CHOICE:
-                settings->bullet_speed = 40;
+                settings->bullet_speed = 25;
                 break;
             case FIFTH_CHOICE:
-                settings->bullet_speed = 50;
+                settings->bullet_speed = 30;
                 break;
             }
         }

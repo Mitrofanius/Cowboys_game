@@ -132,3 +132,31 @@ void draw_rectangle(unsigned short *frame_buffer, int x, int y, int width, int h
         }
     }
 }
+
+/* Converts integer to string */
+void itoa(char string[], int number)
+{
+   int i, remainder, length = 0, n;
+ 
+   n = number;
+   while (n != 0)
+   {
+      length++;
+      n /= 10;
+   }
+   
+   for (i = 0; i < length; i++)
+   {
+      remainder = number % 10;
+      number = number / 10;
+      string[length - (i + 1)] = remainder + '0';
+   }
+
+   if (length == 0 && number == 0)
+   {
+      string[length] = '0';
+      length++;
+   }
+   
+   string[length] = '\0';
+}
