@@ -24,7 +24,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     draw_rectangle(frame_buffer, 127, 29, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 29, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
     draw_rectangle(frame_buffer, 229, 29, 42, 42, 0, C_LIGHT_GREEN, C_LIGHT_GREEN);
-    draw_rectangle(frame_buffer, 280, 29, 42, 42, 0, C_DARK_ORANGE, C_DARK_ORANGE);
+    draw_rectangle(frame_buffer, 280, 29, 42, 42, 0, C_LIGHT_YELLOW, C_LIGHT_YELLOW);
     draw_rectangle(frame_buffer, 331, 29, 42, 42, 0, C_PINK, C_PINK);
     draw_rectangle(frame_buffer, 382, 29, 42, 42, 0, C_LIGHT_GRAY, C_LIGHT_GRAY);
 
@@ -39,7 +39,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     draw_rectangle(frame_buffer, 127, 105, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 105, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
     draw_rectangle(frame_buffer, 229, 105, 42, 42, 0, C_LIGHT_GREEN, C_LIGHT_GREEN);
-    draw_rectangle(frame_buffer, 280, 105, 42, 42, 0, C_DARK_ORANGE, C_DARK_ORANGE);
+    draw_rectangle(frame_buffer, 280, 105, 42, 42, 0, C_LIGHT_YELLOW, C_LIGHT_YELLOW);
     draw_rectangle(frame_buffer, 331, 105, 42, 42, 0, C_PINK, C_PINK);
     draw_rectangle(frame_buffer, 382, 105, 42, 42, 0, C_LIGHT_GRAY, C_LIGHT_GRAY);
 
@@ -53,7 +53,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     draw_rectangle(frame_buffer, 127, 181, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 181, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
     draw_rectangle(frame_buffer, 229, 181, 42, 42, 0, C_LIGHT_GREEN, C_LIGHT_GREEN);
-    draw_rectangle(frame_buffer, 280, 181, 42, 42, 0, C_DARK_ORANGE, C_DARK_ORANGE);
+    draw_rectangle(frame_buffer, 280, 181, 42, 42, 0, C_LIGHT_YELLOW, C_LIGHT_YELLOW);
     draw_rectangle(frame_buffer, 331, 181, 42, 42, 0, C_PINK, C_PINK);
     draw_rectangle(frame_buffer, 382, 181, 42, 42, 0, C_LIGHT_GRAY, C_LIGHT_GRAY);
 

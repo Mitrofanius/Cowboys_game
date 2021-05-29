@@ -43,7 +43,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
     case C_LIGHT_GREEN:
         choice_left_player_color = THIRD_CHOICE;
         break;
-    case C_DARK_ORANGE:
+    case C_LIGHT_YELLOW:
         choice_left_player_color = FOURTH_CHOICE;
         break;
     case C_PINK:
@@ -66,7 +66,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
     case C_LIGHT_GREEN:
         choice_right_player_color = THIRD_CHOICE;
         break;
-    case C_DARK_ORANGE:
+    case C_LIGHT_YELLOW:
         choice_right_player_color = FOURTH_CHOICE;
         break;
     case C_PINK:
@@ -89,7 +89,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
     case C_LIGHT_GREEN:
         choice_bullet_color = THIRD_CHOICE;
         break;
-    case C_DARK_ORANGE:
+    case C_LIGHT_YELLOW:
         choice_bullet_color = FOURTH_CHOICE;
         break;
     case C_PINK:
@@ -194,8 +194,8 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
                 cowboy_left.color = C_LIGHT_GREEN;
                 break;
             case FOURTH_CHOICE:
-                settings->player_left_color = C_DARK_ORANGE;
-                cowboy_left.color = C_DARK_ORANGE;
+                settings->player_left_color = C_LIGHT_YELLOW;
+                cowboy_left.color = C_LIGHT_YELLOW;
                 break;
             case FIFTH_CHOICE:
                 settings->player_left_color = C_PINK;
@@ -222,8 +222,8 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
                 cowboy_right.color = C_LIGHT_GREEN;
                 break;
             case FOURTH_CHOICE:
-                settings->player_right_color = C_DARK_ORANGE;
-                cowboy_right.color = C_DARK_ORANGE;
+                settings->player_right_color = C_LIGHT_YELLOW;
+                cowboy_right.color = C_LIGHT_YELLOW;
                 break;
             case FIFTH_CHOICE:
                 settings->player_right_color = C_PINK;
@@ -250,8 +250,8 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
                 bullet.color = C_LIGHT_GREEN;
                 break;
             case FOURTH_CHOICE:
-                settings->bullet_color = C_DARK_ORANGE;
-                bullet.color = C_DARK_ORANGE;
+                settings->bullet_color = C_LIGHT_YELLOW;
+                bullet.color = C_LIGHT_YELLOW;
                 break;
             case FIFTH_CHOICE:
                 settings->bullet_color = C_PINK;

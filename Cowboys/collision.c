@@ -116,13 +116,13 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         bullet->speed_x = 0;
         bullet->speed_y = 0;
 
-        if (game_map->cowboy_left.health < BULLET_FIRE_POWER)
+        if (game_map->cowboy_left.health >= BULLET_FIRE_POWER)
         {
-            game_map->cowboy_left.health = 0;
+            game_map->cowboy_left.health -= BULLET_FIRE_POWER;
         }
         else 
         {
-            game_map->cowboy_left.health -= BULLET_FIRE_POWER;
+            game_map->cowboy_left.health = 0;
         }
         game_map->cowboy_left.animation = ANIMATION_TIME;
         printf("\n\n\n  COWBOY LEFT WAS HIT BY BULLET   \n\n\n");
@@ -131,7 +131,7 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         {
             game_map->cowboy_left.state = DEAD;
             game_map->cowboy_left.width = COWBOY_DEAD_WIDTH;
-            game_map->cowboy_left.health = COWBOY_DEAD_HEIGHT;
+            game_map->cowboy_left.height = COWBOY_DEAD_HEIGHT;
 
             printf("\n\n\n  COWBOY LEFT DIED     \n\n\n");
         }
@@ -144,23 +144,23 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         bullet->speed_x = 0;
         bullet->speed_y = 0;
 
-        if (game_map->cowboy_right.health < BULLET_FIRE_POWER)
+        if (game_map->cowboy_right.health >= BULLET_FIRE_POWER)
         {
-            game_map->cowboy_right.health = 0;
+            game_map->cowboy_right.health -= BULLET_FIRE_POWER;
         }
         else 
         {
-            game_map->cowboy_right.health -= BULLET_FIRE_POWER;
+            game_map->cowboy_right.health = 0;
         }
         
         game_map->cowboy_right.animation = ANIMATION_TIME;
         printf("\n\n\n  COWBOY RIGHT WAS HIT BULLET     \n\n\n");
 
-        if (game_map->cowboy_left.health == 0)
+        if (game_map->cowboy_right.health == 0)
         {
-            game_map->cowboy_left.state = DEAD;
-            game_map->cowboy_left.width = COWBOY_DEAD_WIDTH;
-            game_map->cowboy_left.health = COWBOY_DEAD_HEIGHT;
+            game_map->cowboy_right.state = DEAD;
+            game_map->cowboy_right.width = COWBOY_DEAD_WIDTH;
+            game_map->cowboy_right.height = COWBOY_DEAD_HEIGHT;
 
             printf("\n\n\n  COWBOY RIGHT DIED     \n\n\n");
         }

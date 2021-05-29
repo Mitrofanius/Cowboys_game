@@ -31,6 +31,8 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
 
 void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
+void start_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);
+
 game_map_t load_default_game();
 
 #ifdef __cplusplus

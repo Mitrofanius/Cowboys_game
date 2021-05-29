@@ -63,6 +63,8 @@ extern "C"
                             unsigned char choice_left_player_color, unsigned char choice_right_player_color, 
                             unsigned char choice_bullet_color, int choice_bullet_speed);
 
+    void draw_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, unsigned short *animation);
+
     void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer);
 
     void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);

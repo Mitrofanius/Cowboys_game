@@ -158,7 +158,12 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
     {
         if (game_map.cowboy_left.state == DEAD || game_map.cowboy_right.state == DEAD)
         {
-            sleep(3);
+            sleep(1);
+            game_map.cowboy_left.animation = 0;
+            game_map.cowboy_right.animation = 0;
+            draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
+            sleep(1);
+            start_ending_menu(parlcd_mem_base, frame_buffer, &game_map);
             break;
         }
         
@@ -179,13 +184,15 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
                 game_map.cowboy_left.bullets = COWBOY_BULLET_AMOUNT;
                 game_map.cowboy_left.state = AIMING;
                 game_map.cowboy_left.width = COWBOY_AIMING_WIDTH;
-                game_map.cowboy_left.health = COWBOY_AIMING_HEIGHT;
+                game_map.cowboy_left.height = COWBOY_AIMING_HEIGHT;
 
                 game_map.cowboy_right.bullets = COWBOY_BULLET_AMOUNT;
                 game_map.cowboy_right.x = COWBOY_RIGHT_X;
                 game_map.cowboy_right.state = AIMING;
                 game_map.cowboy_right.width = COWBOY_AIMING_WIDTH;
-                game_map.cowboy_right.health = COWBOY_AIMING_HEIGHT;
+                game_map.cowboy_right.height = COWBOY_AIMING_HEIGHT;
+
+                reload_pistols = false;
             }
         }
 
