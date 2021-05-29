@@ -35,9 +35,9 @@ void check_collisions(game_map_t *game_map)
                 game_map->object_manager.bullets[i].speed_y = 0;
                 game_map->object_manager.bullets[i].is_active = false;
             }
-            check_collision_with_cactuses(&(game_map->object_manager.bullets[i]), game_map->object_manager.cactuses, game_map->object_manager.cactuses_length);
+            check_collision_with_cactuses(&(game_map->object_manager.bullets[i]), game_map->object_manager.cactuses, game_map->object_manager.cactuses_length, game_map);
             check_collision_with_stones(&(game_map->object_manager.bullets[i]), game_map->object_manager.stones, game_map->object_manager.stones_length, game_map);
-            check_collision_with_barrels(&(game_map->object_manager.bullets[i]), game_map->object_manager.barrels, game_map->object_manager.barrels_length);
+            check_collision_with_barrels(&(game_map->object_manager.bullets[i]), game_map->object_manager.barrels, game_map->object_manager.barrels_length, game_map);
 
             check_collision_with_cowboys(&(game_map->object_manager.bullets[i]), game_map);
         }
@@ -49,7 +49,7 @@ bool isBulletOnMap(bullet_t *bullet)
     return (bullet->x >= 0 && bullet->x + BULLET_WIDTH * SCALE < 480 && bullet->y >= 0 && bullet->y + BULLET_HEIGHT * SCALE < 320);
 }
 
-void check_collision_with_cactuses(bullet_t *bullet, cactus_t *cactuses, unsigned char length)
+void check_collision_with_cactuses(bullet_t *bullet, cactus_t *cactuses, unsigned char length, game_map_t *game_map)
 {
     for (int i = 0; i < length; i++)
     {
@@ -58,6 +58,8 @@ void check_collision_with_cactuses(bullet_t *bullet, cactus_t *cactuses, unsigne
             cactuses[i].is_active = false;
             bullet->speed_x = -bullet->speed_x;
             bullet->speed_y = -bullet->speed_y;
+            game_map->amount_of_active_objects--;
+            game_map->array_of_free_places[cactuses[i].index] = 0;
         }
     }
 }
@@ -71,18 +73,23 @@ void check_collision_with_stones(bullet_t *bullet, stone_t *stones, unsigned cha
             bullet->speed_y = 2;
             generate_bullet_after_collision_with_stone(game_map, bullet);
             stones[i].is_active = false;
+            game_map->amount_of_active_objects--;
+            game_map->array_of_free_places[stones[i].index] = 0;
         }
     }
 }
 
-void check_collision_with_barrels(bullet_t *bullet, barrel_t *barrels, unsigned char length)
+void check_collision_with_barrels(bullet_t *bullet, barrel_t *barrels, unsigned char length, game_map_t *game_map)
 {
     for (int i = 0; i < length; i++)
     {
         if (barrels[i].is_active && (bullet->x + bullet->width * SCALE > barrels[i].x && bullet->x < barrels[i].x + barrels[i].width * SCALE) && (bullet->y + bullet->height * SCALE > barrels[i].y && bullet->y < barrels[i].y + barrels[i].height * SCALE))
         {
             barrels[i].is_active = false;
-            bullet->speed_x /= 5;
+            if (bullet->speed_x >= 10)
+                bullet->speed_x /= 5;
+            game_map->amount_of_active_objects--;
+            game_map->array_of_free_places[barrels[i].index] = 0;
         }
     }
 }
@@ -109,8 +116,7 @@ void generate_bullet_after_collision_with_stone(game_map_t *game_map, bullet_t *
 void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
 {
 
-    if ((bullet->x + bullet->width * SCALE > game_map->cowboy_left.x && bullet->x < game_map->cowboy_left.x + game_map->cowboy_left.width * SCALE - game_map->cowboy_left.width * 2 / 3 * SCALE) 
-            && (bullet->y + bullet->height * SCALE > game_map->cowboy_left.y && bullet->y < game_map->cowboy_left.y + game_map->cowboy_left.height * SCALE))
+    if ((bullet->x + bullet->width * SCALE > game_map->cowboy_left.x && bullet->x < game_map->cowboy_left.x + game_map->cowboy_left.width * SCALE - game_map->cowboy_left.width * 2 / 3 * SCALE) && (bullet->y + bullet->height * SCALE > game_map->cowboy_left.y && bullet->y < game_map->cowboy_left.y + game_map->cowboy_left.height * SCALE))
     {
         bullet->is_active = false;
         bullet->speed_x = 0;
@@ -120,7 +126,7 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         {
             game_map->cowboy_left.health -= BULLET_FIRE_POWER;
         }
-        else 
+        else
         {
             game_map->cowboy_left.health = 0;
         }
@@ -137,8 +143,7 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         }
     }
 
-    if ((bullet->x + bullet->width * SCALE > game_map->cowboy_right.x + game_map->cowboy_right.width * 2 / 3 * SCALE && bullet->x < game_map->cowboy_right.x + game_map->cowboy_right.width * SCALE) 
-            && (bullet->y + bullet->height * SCALE > game_map->cowboy_right.y && bullet->y < game_map->cowboy_right.y + game_map->cowboy_right.height * SCALE))
+    if ((bullet->x + bullet->width * SCALE > game_map->cowboy_right.x + game_map->cowboy_right.width * 2 / 3 * SCALE && bullet->x < game_map->cowboy_right.x + game_map->cowboy_right.width * SCALE) && (bullet->y + bullet->height * SCALE > game_map->cowboy_right.y && bullet->y < game_map->cowboy_right.y + game_map->cowboy_right.height * SCALE))
     {
         bullet->is_active = false;
         bullet->speed_x = 0;
@@ -148,11 +153,11 @@ void check_collision_with_cowboys(bullet_t *bullet, game_map_t *game_map)
         {
             game_map->cowboy_right.health -= BULLET_FIRE_POWER;
         }
-        else 
+        else
         {
             game_map->cowboy_right.health = 0;
         }
-        
+
         game_map->cowboy_right.animation = ANIMATION_TIME;
         printf("\n\n\n  COWBOY RIGHT WAS HIT BULLET     \n\n\n");
 

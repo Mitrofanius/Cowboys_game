@@ -19,16 +19,15 @@ game_map_t load_default_game()
         .cowboy_right = {.x = COWBOY_RIGHT_X, .y = COWBOY_RIGHT_Y, .width = COWBOY_AIMING_WIDTH, .height = COWBOY_AIMING_HEIGHT, .color = C_RED, .side = RIGHT, .state = AIMING, .health = COWBOY_HEALTH, .direction = DOWN, .bullets = COWBOY_BULLET_AMOUNT},
 
         .object_manager.barrels_length = BARREL_AMOUNT,
-        .object_manager.barrels[0] = {.x = 100, .y = 100, .width = BARREL_WIDTH, .height = BARREL_HEIGHT, .is_active = true},
 
         .object_manager.stones_length = STONE_AMOUNT,
-        .object_manager.stones[0] = {.x = 150, .y = 150, .width = STONE_WIDTH, .height = STONE_HEIGHT, .is_active = true},
 
         .object_manager.cactuses_length = CACTUS_AMOUNT,
-        .object_manager.cactuses[0] = {.x = 200, .y = 50, .width = CACTUS_WIDTH, .height = CACTUS_HEIGHT, .is_active = true},
 
-        .object_manager.bullets_length = BULLET_AMOUNT};
+        .object_manager.bullets_length = BULLET_AMOUNT,
+        .amount_of_active_objects = 0};
 
+    generate_objects_on_greed(&game_map);
     return game_map;
 }
 
@@ -166,7 +165,6 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
             start_ending_menu(parlcd_mem_base, frame_buffer, &game_map);
             break;
         }
-        
 
         if (game_map.cowboy_left.bullets == 0 && game_map.cowboy_right.bullets == 0)
         {
@@ -192,6 +190,7 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
                 game_map.cowboy_right.width = COWBOY_AIMING_WIDTH;
                 game_map.cowboy_right.height = COWBOY_AIMING_HEIGHT;
 
+                generate_objects_on_greed(&game_map);
                 reload_pistols = false;
             }
         }

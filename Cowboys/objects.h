@@ -6,7 +6,7 @@
 #define RUNNING 1
 #define DEAD 2
 
-#define BULLET_FIRE_POWER 100
+#define BULLET_FIRE_POWER 10
 
 #define ANIMATION_TIME 1000
 
@@ -14,7 +14,7 @@
 
 #define COWBOY_RELOCATION 3
 
-#define COWBOY_BULLET_AMOUNT 1
+#define COWBOY_BULLET_AMOUNT 2
 
 #define COWBOY_LEFT_X 15
 #define COWBOY_LEFT_Y 130
@@ -73,6 +73,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        unsigned short index;
         bool is_active;
     } cactus_t;
 
@@ -82,6 +83,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        unsigned short index;
         bool is_active;
     } barrel_t;
 
@@ -91,6 +93,7 @@ extern "C"
         unsigned short y;
         unsigned short width;
         unsigned short height;
+        unsigned short index;
         bool is_active;
     } stone_t;
 

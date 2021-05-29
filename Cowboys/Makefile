@@ -7,11 +7,12 @@ CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 
 SOURCES = main.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c
-SOURCES += game.c input_catcher.c collision.c one_player_game.c two_players_game.c 
+SOURCES += game.c input_catcher.c collision.c one_player_game.c two_players_game.c
 SOURCES += main_menu.c settings_menu.c pause_menu.c ending_menu.c
 SOURCES += font_prop14x16.c font_rom8x16.c
 SOURCES += draw_scene_animation.c draw.c draw_main_menu.c draw_settings_menu.c draw_pause_menu.c
 SOURCES += draw_one_player_game.c draw_two_players_game.c draw_ending_menu.c draw_cowboy.c draw_game_map.c draw_objects.c
+SOURCES += spawn.c
 
 TARGET_EXE = cowboys
 TARGET_IP ?= 192.168.202.214

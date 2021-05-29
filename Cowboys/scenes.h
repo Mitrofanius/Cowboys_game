@@ -5,10 +5,12 @@
 #include "input_catcher.h"
 #include <time.h>
 #include "collision.h"
+#include "spawn.h"
 #include "settings.h"
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 /* Main menu */
@@ -21,22 +23,22 @@ extern "C" {
 #define RESUME 0
 #define MAIN_MENU 1
 
-void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice);
+    void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice);
 
-void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
+    void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
-void start_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice);
+    void start_pause_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice);
 
-void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
+    void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
-void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
+    void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
-void start_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);
+    void start_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);
 
-game_map_t load_default_game();
+    game_map_t load_default_game();
 
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*SCENES_H*/
+#endif /*SCENES_H*/
