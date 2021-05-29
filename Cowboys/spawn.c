@@ -50,7 +50,7 @@ void generate_objects_on_greed(game_map_t *game_map)
                         game_map->object_manager.barrels[i].width = BARREL_WIDTH;
                         game_map->object_manager.barrels[i].height = BARREL_HEIGHT;
                         game_map->object_manager.barrels[i].is_active = true;
-                        game_map->object_manager.cactuses[i].index = number_of_block;
+                        game_map->object_manager.barrels[i].index = number_of_block;
                         game_map->amount_of_active_objects++;
                         game_map->array_of_free_places[number_of_block] = TYPE_BARREL;
                         break;
