@@ -43,6 +43,7 @@ void update_bullets(bullet_t *bullets, unsigned short length)
     }
 }
 
+/* Animation sliding cowboy UP and DOWN */
 void update_cowboy(cowboy_t *cowboy)
 {
     if (cowboy->direction == UP)
@@ -77,65 +78,6 @@ void update_states(game_map_t *game_map)
     check_collisions(game_map);
 }
 
-void fire_cowboy_left(game_map_t *game_map)
-{
-    if (game_map->cowboy_left.bullets > 0)
-    {
-        for (int i = 0; i < game_map->object_manager.bullets_length; i++)
-        {
-            if (!(game_map->object_manager.bullets[i].is_active))
-            {
-                game_map->object_manager.bullets[i].x = game_map->cowboy_left.x + COWBOY_AIMING_WIDTH * SCALE;
-                game_map->object_manager.bullets[i].y = game_map->cowboy_left.y + 7 * SCALE;
-                game_map->object_manager.bullets[i].width = BULLET_WIDTH;
-                game_map->object_manager.bullets[i].height = BULLET_HEIGHT;
-                game_map->object_manager.bullets[i].color = game_map->bullet_color;
-                game_map->object_manager.bullets[i].speed_x = game_map->bullet_speed;
-                game_map->cowboy_left.bullets--;
-                game_map->object_manager.bullets[i].is_active = true;
-
-                if (game_map->cowboy_left.bullets == 0)
-                {
-                    game_map->cowboy_left.state = RUNNING;
-                    game_map->cowboy_left.width = COWBOY_RUNNING_WIDTH;
-                    game_map->cowboy_left.height = COWBOY_RUNNING_HEIGHT;
-                }
-                break;
-            }
-        }
-    }
-}
-
-void fire_cowboy_right(game_map_t *game_map)
-{
-    if (game_map->cowboy_right.bullets > 0)
-    {
-        for (int i = 0; i < game_map->object_manager.bullets_length; i++)
-        {
-            if (!(game_map->object_manager.bullets[i].is_active))
-            {
-                game_map->object_manager.bullets[i].x = game_map->cowboy_right.x - BULLET_WIDTH * SCALE;
-                game_map->object_manager.bullets[i].y = game_map->cowboy_right.y + 7 * SCALE;
-                game_map->object_manager.bullets[i].width = BULLET_WIDTH;
-                game_map->object_manager.bullets[i].height = BULLET_HEIGHT;
-                game_map->object_manager.bullets[i].color = game_map->bullet_color;
-                game_map->object_manager.bullets[i].speed_x = -game_map->bullet_speed;
-                game_map->cowboy_right.bullets--;
-                game_map->object_manager.bullets[i].is_active = true;
-
-                if (game_map->cowboy_right.bullets == 0)
-                {
-                    game_map->cowboy_right.x += (COWBOY_AIMING_WIDTH - COWBOY_RUNNING_WIDTH) * SCALE;
-                    game_map->cowboy_right.state = RUNNING;
-                    game_map->cowboy_right.width = COWBOY_RUNNING_WIDTH;
-                    game_map->cowboy_right.height = COWBOY_RUNNING_HEIGHT;
-                }
-                break;
-            }
-        }
-    }
-}
-
 void load_settings(game_map_t *game_map, settings_t *settings)
 {
     game_map->cowboy_left.color = settings->player_left_color;
@@ -145,27 +87,35 @@ void load_settings(game_map_t *game_map, settings_t *settings)
 }
 
 void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
-{
+{   
+    bool reload_pistols = false;
+    unsigned char ch, choice = RESUME;
     struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 10000};
+    font_descriptor = &font_rom8x16;
+
+    /* Sets up the map and settings */
     game_map_t game_map = load_default_game();
     load_settings(&game_map, settings);
-    bool reload_pistols = false;
-
-    unsigned char ch, choice = RESUME;
-    draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
+    
+    draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     while (true)
-    {
+    {   
+        /* Checks whether it is the end of current game*/
         if (game_map.cowboy_left.state == DEAD || game_map.cowboy_right.state == DEAD)
         {
             sleep(1);
             game_map.cowboy_left.animation = 0;
             game_map.cowboy_right.animation = 0;
-            draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
+            draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
             sleep(1);
-            start_ending_menu(parlcd_mem_base, frame_buffer, &game_map);
+            printf("\n--------------------\n");
+            printf("\n|     GAME OVER     |\n");
+            printf("\n--------------------\n");
+            start_ending_menu(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
             break;
         }
 
+        /* New round logic (reloads pistols and spawns new objects on the map)*/
         if (game_map.cowboy_left.bullets == 0 && game_map.cowboy_right.bullets == 0)
         {
             reload_pistols = true;
@@ -195,17 +145,26 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
             }
         }
 
+        /* Updates bullet and cowboy coordinates, cowboy direction and checks collisions */
         update_states(&game_map);
 
         ch = getch(stdin);
         if (ch == ESCAPE)
         {
-            printf("\n\n\n  PAUSE   \n\n\n");
+            printf("\n--------------------\n");
+            printf("\n|       PAUSE      |\n");
+            printf("\n--------------------\n");
             start_pause_menu(parlcd_mem_base, frame_buffer, font_descriptor, &choice);
             if (choice == MAIN_MENU)
             {
+                printf("\n--------------------\n");
+                printf("\n|     MAIN MENU    |\n");
+                printf("\n--------------------\n");
                 break;
             }
+            printf("\n--------------------\n");
+            printf("\n|      RESUME      |\n");
+            printf("\n--------------------\n");
         }
         else if (ch == 'w')
         {
@@ -232,7 +191,7 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
             fire_cowboy_right(&game_map);
         }
 
-        draw_two_players_game(parlcd_mem_base, frame_buffer, &game_map);
+        draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
     }
 }

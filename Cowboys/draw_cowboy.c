@@ -110,7 +110,7 @@ unsigned short cowboy_dead_right[] = {
     C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, __NO__, __NO__, __NO__, C_BROWN, C_BROWN, __NO__, __NO__, __NO__, __NO__,
     __NO__, C_RED, C_RED, C_RED, C_RED, C_RED, C_RED, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__, __NO__};
 
-void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale)
+void draw_cowboy(unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale)
 {
     int i, j;
 

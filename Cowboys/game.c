@@ -4,12 +4,15 @@
 void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor)
 {
     unsigned char choice;
+
+    /* Loading animation */
     draw_loading_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 
+    /* Default settings */
     settings_t settings = {
-        .player_left_color = C_RED,
-        .player_right_color = C_LIGHT_BLUE,
-        .bullet_color = C_LIGHT_GREEN,
+        .player_left_color = C_LIGHT_YELLOW,
+        .player_right_color = C_LIGHT_GREEN,
+        .bullet_color = C_PINK,
         .bullet_speed = 10};
 
     while (true)
@@ -21,21 +24,30 @@ void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, fo
         {
         case ONE_PLAYER_GAME:
             /* 1 player game */
-            printf("\n\n\n ONE_PLAYER_GAME \n\n\n");
+            printf("\n--------------------\n");
+            printf("\n|  ONE_PLAYER_GAME |\n");
+            printf("\n--------------------\n");
             start_one_player_game(parlcd_mem_base, frame_buffer, font_descriptor, &settings);
             break;
         case TWO_PLAYERS_GAME:
             /* 2 players game */
-            printf("\n\n\n TWO_PLAYERS_GAME \n\n\n");
+            printf("\n--------------------\n");
+            printf("\n| TWO_PLAYERS_GAME |\n");
+            printf("\n--------------------\n");
             start_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &settings);
             break;
         case SETTINGS:
             /* settings */
-            printf("\n\n\n SETTINGS \n\n\n");
+            printf("\n--------------------\n");
+            printf("\n|     SETTINGS     |\n");
+            printf("\n--------------------\n");
             start_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &settings);
             break;
         default:
-            printf("\n\n\n EXIT \n\n\n");
+            /* exit */
+            printf("\n--------------------\n");
+            printf("\n|       EXIT       |\n");
+            printf("\n--------------------\n");
             break;
         }
 
@@ -44,6 +56,7 @@ void start_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, fo
             break;
         }
     }
-
+    
+    /* Closing animation */
     draw_closing_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 }

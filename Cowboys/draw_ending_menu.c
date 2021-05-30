@@ -1,9 +1,8 @@
 
 #include "draw.h"
 
-void draw_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, unsigned short *animation)
+void draw_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map, unsigned short *animation)
 {
-    font_descriptor_t *font_descriptor = &font_rom8x16;
     int i;
 
     draw_rectangle(frame_buffer, 130, 95, 214, 132, 3, C_BLACK, 0x9B01);

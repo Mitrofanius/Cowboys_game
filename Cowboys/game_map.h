@@ -26,6 +26,7 @@ extern "C"
         int array_of_free_places[GREED_WIDTH * GREED_HEIGHT];
     } game_map_t;
 
+
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif

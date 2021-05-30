@@ -47,7 +47,7 @@ unsigned short cactus_pixels[] = {
     __NO__, __NO__, __NO__, __NO__, C_LIGHT_GREEN, C_LIGHT_GREEN, __NO__, __NO__, __NO__, __NO__,
     __NO__, __NO__, __NO__, __NO__, C_BLACK, C_BLACK, __NO__, __NO__, __NO__, __NO__};
 
-void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, object_manager_t *object_manager, int scale)
+void draw_objects(unsigned short *frame_buffer, object_manager_t *object_manager, int scale)
 {
     int i;
 
@@ -55,7 +55,7 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
     {
         if (object_manager->barrels[i].is_active)
         {
-            draw_barrel(parlcd_mem_base, frame_buffer, &(object_manager->barrels[i]), scale);
+            draw_barrel(frame_buffer, &(object_manager->barrels[i]), scale);
         }
     }
 
@@ -63,7 +63,7 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
     {
         if (object_manager->stones[i].is_active)
         {
-            draw_stone(parlcd_mem_base, frame_buffer, &(object_manager->stones[i]), scale);
+            draw_stone(frame_buffer, &(object_manager->stones[i]), scale);
         }
     }
 
@@ -71,7 +71,7 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
     {
         if (object_manager->cactuses[i].is_active)
         {
-            draw_cactus(parlcd_mem_base, frame_buffer, &(object_manager->cactuses[i]), scale);
+            draw_cactus(frame_buffer, &(object_manager->cactuses[i]), scale);
         }
     }
 
@@ -79,12 +79,12 @@ void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, 
     {
         if (object_manager->bullets[i].is_active)
         {
-            draw_bullet(parlcd_mem_base, frame_buffer, &(object_manager->bullets[i]), scale);
+            draw_bullet(frame_buffer, &(object_manager->bullets[i]), scale);
         }
     }
 }
 
-void draw_cactus(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cactus_t *cactus, int scale)
+void draw_cactus(unsigned short *frame_buffer, cactus_t *cactus, int scale)
 {
     int i, j;
 
@@ -100,7 +100,7 @@ void draw_cactus(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, c
     }
 }
 
-void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, bullet_t *bullet, int scale)
+void draw_bullet(unsigned short *frame_buffer, bullet_t *bullet, int scale)
 {
     int i, j;
 
@@ -116,7 +116,7 @@ void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, b
     }
 }
 
-void draw_stone(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, stone_t *stone, int scale)
+void draw_stone(unsigned short *frame_buffer, stone_t *stone, int scale)
 {
     int i, j;
 
@@ -132,7 +132,7 @@ void draw_stone(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, st
     }
 }
 
-void draw_barrel(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, barrel_t *barrel, int scale)
+void draw_barrel(unsigned short *frame_buffer, barrel_t *barrel, int scale)
 {
     int i, j;
 

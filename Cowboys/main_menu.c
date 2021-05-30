@@ -3,6 +3,8 @@
 
 void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice)
 {
+    font_descriptor = &font_winFreeSystem14x16;
+    
     draw_main_menu(parlcd_mem_base, frame_buffer, font_descriptor, choice);
 
     unsigned char ch;

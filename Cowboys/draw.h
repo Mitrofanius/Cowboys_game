@@ -3,8 +3,6 @@
 #define DRAW_H
 
 #include <stdio.h>
-#include <stdbool.h>
-#include <termios.h>
 
 #include "font_types.h"
 #include "game_map.h"
@@ -63,29 +61,29 @@ extern "C"
                             unsigned char choice_left_player_color, unsigned char choice_right_player_color, 
                             unsigned char choice_bullet_color, int choice_bullet_speed);
 
-    void draw_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, unsigned short *animation);
+    void draw_ending_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map, unsigned short *animation);
 
-    void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer);
+    void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map);
 
-    void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map);
+    void draw_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map);
 
-    void draw_cowboy(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale);
+    void draw_cowboy(unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short scale);
 
     void draw_cowboy_helper_function(unsigned short *frame_buffer, cowboy_t *cowboy, unsigned short *source_array, int i, int j, unsigned short scale);
 
-    void draw_objects(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, object_manager_t *object_manager, int scale);
+    void draw_objects(unsigned short *frame_buffer, object_manager_t *object_manager, int scale);
 
-    void draw_cactus(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, cactus_t *cactus, int scale);
+    void draw_cactus(unsigned short *frame_buffer, cactus_t *cactus, int scale);
 
-    void draw_bullet(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, bullet_t *bullet, int scale);
+    void draw_bullet(unsigned short *frame_buffer, bullet_t *bullet, int scale);
 
-    void draw_stone(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, stone_t *stone, int scale);
+    void draw_stone(unsigned short *frame_buffer, stone_t *stone, int scale);
 
-    void draw_barrel(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, barrel_t *barrel, int scale);
+    void draw_barrel(unsigned short *frame_buffer, barrel_t *barrel, int scale);
 
-    void draw_game_map(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, game_map_t *game_map, int scale);
+    void draw_game_map(unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map, int scale);
     
-    void draw_game_label(unsigned short *frame_buffer, unsigned char left_health, unsigned short left_color, unsigned char left_bullets,  unsigned char right_health, unsigned short right_color, unsigned char right_bullets);
+    void draw_game_label(unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char left_health, unsigned short left_color, unsigned char left_bullets, unsigned short bullets_color, unsigned char right_health, unsigned short right_color, unsigned char right_bullets);
 
     void itoa(char string[], int number);
 

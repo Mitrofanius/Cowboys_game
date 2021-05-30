@@ -19,7 +19,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         draw_rectangle(frame_buffer, 54, 21, 66, 57, 3, 0x9CF3, 0x9CF3);
     }
-    draw_cowboy(parlcd_mem_base, frame_buffer, cowboy_left, 3);
+    draw_cowboy(frame_buffer, cowboy_left, 3);
     draw_rectangle(frame_buffer, 124 + 51 * choice_left_player_color, 26, 48, 48, 3, C_WHITE, C_WHITE);
     draw_rectangle(frame_buffer, 127, 29, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 29, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
@@ -34,7 +34,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         draw_rectangle(frame_buffer, 54, 97, 66, 57, 3, 0x9CF3, 0x9CF3);
     }
-    draw_cowboy(parlcd_mem_base, frame_buffer, cowboy_right, 3);
+    draw_cowboy(frame_buffer, cowboy_right, 3);
     draw_rectangle(frame_buffer, 124 + 51 * choice_right_player_color, 102, 48, 48, 3, C_WHITE, C_WHITE);
     draw_rectangle(frame_buffer, 127, 105, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 105, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);
@@ -48,7 +48,7 @@ void draw_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_bu
     {
         draw_rectangle(frame_buffer, 54, 173, 66, 57, 3, 0x9CF3, 0x9CF3);
     }
-    draw_bullet(parlcd_mem_base, frame_buffer, bullet, 12);
+    draw_bullet(frame_buffer, bullet, 12);
     draw_rectangle(frame_buffer, 124 + 51 * choice_bullet_color, 178, 48, 48, 3, C_WHITE, C_WHITE);
     draw_rectangle(frame_buffer, 127, 181, 42, 42, 0, C_RED, C_RED);
     draw_rectangle(frame_buffer, 178, 181, 42, 42, 0, C_LIGHT_BLUE, C_LIGHT_BLUE);

@@ -1,14 +1,17 @@
 
 #include "draw.h"
 
-void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer)
+void draw_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, game_map_t *game_map)
 {
     int i;
+
     /* Background */
     for (i = 0; i < 320 * 480; i++)
     {
-        frame_buffer[i] = 0xCCCE;
+        frame_buffer[i] = 0xBC06;
     }
+
+    ///TODO: game
     
     /* Sends info to screen */
     parlcd_write_cmd(parlcd_mem_base, 0x2c);

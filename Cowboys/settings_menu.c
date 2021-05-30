@@ -1,10 +1,15 @@
 
 #include "scenes.h"
 
+void switch_choice_helper(unsigned short color_to_test, unsigned char *choice_variable);
+void switch_color_helper(unsigned char choice_to_test, unsigned short *color_variable_settings, unsigned short *color_variable);
+
 void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {
     unsigned char choice_button = PLAYER_LEFT_COLOUR;
+    font_descriptor = &font_winFreeSystem14x16;
 
+    /* Local structs variables for drawing setting */
     cowboy_t cowboy_left = {
         .x = 57,
         .y = 24,
@@ -31,75 +36,19 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
         .color = settings->bullet_color,
         .speed_x = 0};
 
+    /* Loading actual left player color settings */
     unsigned char choice_left_player_color = FIRST_CHOICE;
-    switch (settings->player_left_color)
-    {
-    case C_RED:
-        choice_left_player_color = FIRST_CHOICE;
-        break;
-    case C_LIGHT_BLUE:
-        choice_left_player_color = SECOND_CHOICE;
-        break;
-    case C_LIGHT_GREEN:
-        choice_left_player_color = THIRD_CHOICE;
-        break;
-    case C_LIGHT_YELLOW:
-        choice_left_player_color = FOURTH_CHOICE;
-        break;
-    case C_PINK:
-        choice_left_player_color = FIFTH_CHOICE;
-        break;
-    case C_LIGHT_GRAY:
-        choice_left_player_color = SIXTH_CHOICE;
-        break;
-    }
+    switch_choice_helper(settings->player_left_color, &choice_left_player_color);
 
+    /* Loading actual right player color settings */
     unsigned char choice_right_player_color = FIRST_CHOICE;
-    switch (settings->player_right_color)
-    {
-    case C_RED:
-        choice_right_player_color = FIRST_CHOICE;
-        break;
-    case C_LIGHT_BLUE:
-        choice_right_player_color = SECOND_CHOICE;
-        break;
-    case C_LIGHT_GREEN:
-        choice_right_player_color = THIRD_CHOICE;
-        break;
-    case C_LIGHT_YELLOW:
-        choice_right_player_color = FOURTH_CHOICE;
-        break;
-    case C_PINK:
-        choice_right_player_color = FIFTH_CHOICE;
-        break;
-    case C_LIGHT_GRAY:
-        choice_right_player_color = SIXTH_CHOICE;
-        break;
-    }
+    switch_choice_helper(settings->player_right_color, &choice_right_player_color);
 
+    /* Loading actual bullet color settings */
     unsigned char choice_bullet_color = FIRST_CHOICE;
-    switch (settings->bullet_color)
-    {
-    case C_RED:
-        choice_bullet_color = FIRST_CHOICE;
-        break;
-    case C_LIGHT_BLUE:
-        choice_bullet_color = SECOND_CHOICE;
-        break;
-    case C_LIGHT_GREEN:
-        choice_bullet_color = THIRD_CHOICE;
-        break;
-    case C_LIGHT_YELLOW:
-        choice_bullet_color = FOURTH_CHOICE;
-        break;
-    case C_PINK:
-        choice_bullet_color = FIFTH_CHOICE;
-        break;
-    case C_LIGHT_GRAY:
-        choice_bullet_color = SIXTH_CHOICE;
-        break;
-    }
+    switch_choice_helper(settings->bullet_color, &choice_bullet_color);
 
+    /* Loading actual bullet speed settings */
     int choice_bullet_speed = FIRST_CHOICE;
     switch (settings->bullet_speed)
     {
@@ -120,6 +69,7 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
         break;
     }
 
+    /* Drawing settings first time */
     draw_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &cowboy_left, &cowboy_right, &bullet,
                        choice_button, choice_left_player_color, choice_right_player_color, choice_bullet_color, choice_bullet_speed);
 
@@ -179,90 +129,16 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
                 break;
             }
 
-            switch (choice_left_player_color)
-            {
-            case FIRST_CHOICE:
-                settings->player_left_color = C_RED;
-                cowboy_left.color = C_RED;
-                break;
-            case SECOND_CHOICE:
-                settings->player_left_color = C_LIGHT_BLUE;
-                cowboy_left.color = C_LIGHT_BLUE;
-                break;
-            case THIRD_CHOICE:
-                settings->player_left_color = C_LIGHT_GREEN;
-                cowboy_left.color = C_LIGHT_GREEN;
-                break;
-            case FOURTH_CHOICE:
-                settings->player_left_color = C_LIGHT_YELLOW;
-                cowboy_left.color = C_LIGHT_YELLOW;
-                break;
-            case FIFTH_CHOICE:
-                settings->player_left_color = C_PINK;
-                cowboy_left.color = C_PINK;
-                break;
-            case SIXTH_CHOICE:
-                settings->player_left_color = C_LIGHT_GRAY;
-                cowboy_left.color = C_LIGHT_GRAY;
-                break;
-            }
+            /* Applying left player color settings */
+            switch_color_helper(choice_left_player_color, &(settings->player_left_color), &(cowboy_left.color));
+            
+            /* Applying right player color settings */
+            switch_color_helper(choice_right_player_color, &(settings->player_right_color), &(cowboy_right.color));
 
-            switch (choice_right_player_color)
-            {
-            case FIRST_CHOICE:
-                settings->player_right_color = C_RED;
-                cowboy_right.color = C_RED;
-                break;
-            case SECOND_CHOICE:
-                settings->player_right_color = C_LIGHT_BLUE;
-                cowboy_right.color = C_LIGHT_BLUE;
-                break;
-            case THIRD_CHOICE:
-                settings->player_right_color = C_LIGHT_GREEN;
-                cowboy_right.color = C_LIGHT_GREEN;
-                break;
-            case FOURTH_CHOICE:
-                settings->player_right_color = C_LIGHT_YELLOW;
-                cowboy_right.color = C_LIGHT_YELLOW;
-                break;
-            case FIFTH_CHOICE:
-                settings->player_right_color = C_PINK;
-                cowboy_right.color = C_PINK;
-                break;
-            case SIXTH_CHOICE:
-                settings->player_right_color = C_LIGHT_GRAY;
-                cowboy_right.color = C_LIGHT_GRAY;
-                break;
-            }
-
-            switch (choice_bullet_color)
-            {
-            case FIRST_CHOICE:
-                settings->bullet_color = C_RED;
-                bullet.color = C_RED;
-                break;
-            case SECOND_CHOICE:
-                settings->bullet_color = C_LIGHT_BLUE;
-                bullet.color = C_LIGHT_BLUE;
-                break;
-            case THIRD_CHOICE:
-                settings->bullet_color = C_LIGHT_GREEN;
-                bullet.color = C_LIGHT_GREEN;
-                break;
-            case FOURTH_CHOICE:
-                settings->bullet_color = C_LIGHT_YELLOW;
-                bullet.color = C_LIGHT_YELLOW;
-                break;
-            case FIFTH_CHOICE:
-                settings->bullet_color = C_PINK;
-                bullet.color = C_PINK;
-                break;
-            case SIXTH_CHOICE:
-                settings->bullet_color = C_LIGHT_GRAY;
-                bullet.color = C_LIGHT_GRAY;
-                break;
-            }
-
+            /* Applying bullet color settings */
+            switch_color_helper(choice_bullet_color, &(settings->bullet_color), &(bullet.color));
+        
+            /* Applying bullet speed settings */
             switch (choice_bullet_speed)
             {
             case FIRST_CHOICE:
@@ -283,11 +159,71 @@ void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_b
             }
         }
         else if (ch == '\n')
-        {
+        {   
+            printf("\n--------------------\n");
+            printf("\n|     MAIN MENU    |\n");
+            printf("\n--------------------\n");
             break;
         }
 
+        /* Drawing settings */
         draw_settings_menu(parlcd_mem_base, frame_buffer, font_descriptor, &cowboy_left, &cowboy_right, &bullet,
                            choice_button, choice_left_player_color, choice_right_player_color, choice_bullet_color, choice_bullet_speed);
+    }
+}
+
+void switch_choice_helper(unsigned short color_to_test, unsigned char *choice_variable)
+{
+    switch (color_to_test)
+    {
+    case C_RED:
+        *choice_variable = FIRST_CHOICE;
+        break;
+    case C_LIGHT_BLUE:
+        *choice_variable = SECOND_CHOICE;
+        break;
+    case C_LIGHT_GREEN:
+        *choice_variable = THIRD_CHOICE;
+        break;
+    case C_LIGHT_YELLOW:
+        *choice_variable = FOURTH_CHOICE;
+        break;
+    case C_PINK:
+        *choice_variable = FIFTH_CHOICE;
+        break;
+    case C_LIGHT_GRAY:
+        *choice_variable = SIXTH_CHOICE;
+        break;
+    }
+}
+
+void switch_color_helper(unsigned char choice_to_test, unsigned short *color_variable_settings, unsigned short *color_variable)
+{
+    switch (choice_to_test)
+    {
+    case FIRST_CHOICE:
+        *color_variable_settings = C_RED;
+        *color_variable = C_RED;
+        break;
+    case SECOND_CHOICE:
+        *color_variable_settings = C_LIGHT_BLUE;
+        *color_variable = C_LIGHT_BLUE;
+        break;
+    case THIRD_CHOICE:
+        *color_variable_settings = C_LIGHT_GREEN;
+        *color_variable = C_LIGHT_GREEN;
+        break;
+    case FOURTH_CHOICE:
+        *color_variable_settings = C_LIGHT_YELLOW;
+        *color_variable = C_LIGHT_YELLOW;
+        break;
+    case FIFTH_CHOICE:
+        *color_variable_settings = C_PINK;
+        *color_variable = C_PINK;
+        break;
+    case SIXTH_CHOICE:
+        *color_variable_settings = C_LIGHT_GRAY;
+        *color_variable = C_LIGHT_GRAY;
+        break;
     }
 }

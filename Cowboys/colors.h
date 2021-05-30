@@ -1,7 +1,11 @@
-#include <stdint.h>
 
 #ifndef COLOURS_H
 #define COLOURS_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 #define C_SKY 0x14FB
 #define C_BLACK 0x0
@@ -22,6 +26,10 @@
 #define C_PURPLE 0x8010
 #define C_PINK 0xF81E
 #define __NO__ 0x1111
-#define NOT_SPECIFIED 0xF81A
+#define NOT_SPECIFIED 0xF81A\
+
+#ifdef __cplusplus
+} /* extern "C"*/
+#endif
 
 #endif /*COLOURS_H*/

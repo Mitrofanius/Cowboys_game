@@ -6,10 +6,10 @@ extern "C"
 {
 #endif
 
+#include <stdio.h>
+
 #include <stdbool.h>
-#include "objects.h"
 #include "game_map.h"
-#include "draw.h"
 
     void check_collisions(game_map_t *game_map);
     bool isCowboyOnMap(cowboy_t *cowboy);

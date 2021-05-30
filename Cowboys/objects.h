@@ -1,6 +1,8 @@
-#include <stdbool.h>
+
 #ifndef OBJECTS_H
 #define OBJECTS_H
+
+#include <stdbool.h>
 
 #define AIMING 0
 #define RUNNING 1

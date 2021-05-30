@@ -4,7 +4,6 @@
 #include "game_map.h"
 #include <stdlib.h>
 #include <time.h>
-#include "draw.h"
 
 #define TYPE_CACTUS 1
 #define TYPE_BARREL 2
