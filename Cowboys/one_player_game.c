@@ -1,7 +1,7 @@
 
 #include "scenes.h"
 
-void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
+void start_one_player_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {
     font_descriptor = &font_rom8x16;
     ///TODO: setup player's setting

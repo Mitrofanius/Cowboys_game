@@ -1,6 +1,7 @@
 #ifndef SCENES_H
 #define SCENES_H
 
+#include <math.h>
 #include <time.h>
 
 #include "draw.h"
@@ -9,6 +10,8 @@
 #include "spawn.h"
 #include "settings.h"
 #include "cowboy.h"
+
+#include "mzapo_regs.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -27,9 +30,9 @@ extern "C"
 
     void start_main_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, unsigned char *choice);
 
-    void start_one_player_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
+    void start_one_player_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
-    void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
+    void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 
     void start_settings_menu(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings);
 

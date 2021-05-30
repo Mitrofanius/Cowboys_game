@@ -86,9 +86,21 @@ void load_settings(game_map_t *game_map, settings_t *settings)
     game_map->bullet_speed = settings->bullet_speed;
 }
 
-void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
+unsigned long long int power(unsigned char base, unsigned char exponent)
+{   
+    unsigned long long int number = 1;
+    for (unsigned char i = 0; i < exponent; i++)
+    {
+        number *= base;
+    }
+    
+    return number;
+}
+
+void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
 {   
     bool reload_pistols = false;
+    unsigned char round_amount = 33;
     unsigned char ch, choice = RESUME;
     struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 10000};
     font_descriptor = &font_rom8x16;
@@ -100,6 +112,39 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
     draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     while (true)
     {   
+        /* Light on LED-32 */
+        *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_LINE_o) = UINT32_MAX - (power(2, round_amount - 1) - 1);
+
+        /* Light on RGB-LED left*/
+        if (game_map.cowboy_left.health > COWBOY_HEALTH / 3)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0x00FF00;
+        }
+        else if (0 < game_map.cowboy_left.health && game_map.cowboy_left.health <= COWBOY_HEALTH / 3)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0xFF7700;
+        }
+        else  if (game_map.cowboy_left.health == 0)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0xFF0000;
+        }
+
+
+        /* Light off RGB-LED right*/
+        if (game_map.cowboy_right.health > COWBOY_HEALTH / 3)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB2_o) = 0x00FF00;
+        }
+        else if (0 < game_map.cowboy_right.health && game_map.cowboy_right.health <= COWBOY_HEALTH / 3)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB2_o) = 0xFF7700;
+        }
+        else if (game_map.cowboy_right.health == 0)
+        {
+            *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB2_o) = 0xFF0000;
+        }
+
+
         /* Checks whether it is the end of current game*/
         if (game_map.cowboy_left.state == DEAD || game_map.cowboy_right.state == DEAD)
         {
@@ -142,6 +187,12 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
 
                 generate_objects_on_greed(&game_map);
                 reload_pistols = false;
+                round_amount--;
+                if (round_amount == 0)
+                {
+                    round_amount = 33;
+                }
+                
             }
         }
 
@@ -194,4 +245,9 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned short *fram
         draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
     }
+
+    /* Light off LED-32 and RGB-LEDs*/
+    *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_LINE_o) = 0;
+    *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0;
+    *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB2_o) = 0;
 }

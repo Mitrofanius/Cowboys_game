@@ -165,6 +165,8 @@ void draw_cowboy_helper_function(unsigned short *frame_buffer, cowboy_t *cowboy,
         {
             draw_pixel_scale(frame_buffer, cowboy->x + scale * j, cowboy->y + scale * i, scale, C_WHITE);
         }
+
+        
     }
 
     if (cowboy->animation > 0)
