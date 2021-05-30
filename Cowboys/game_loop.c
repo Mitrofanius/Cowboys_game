@@ -251,8 +251,7 @@ void start_game_loop(unsigned char *parlcd_mem_base, unsigned char *led_mem_base
                 fire_cowboy_right(&game_map);
             }
         }
-
-        if (counter == 60)
+        else if (bot && counter == 60)
         {
             make_decision(&game_map);
             counter = 0;
