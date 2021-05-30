@@ -43,6 +43,15 @@ void update_bullets(bullet_t *bullets, unsigned short length)
     }
 }
 
+void make_decision(game_map_t *game_map)
+{
+    int rand_num = rand();
+    if (rand_num % 2 == 0)
+    {
+        fire_cowboy_right(game_map);
+    }
+}
+
 /* Animation sliding cowboy UP and DOWN */
 void update_cowboy(cowboy_t *cowboy)
 {
@@ -87,18 +96,18 @@ void load_settings(game_map_t *game_map, settings_t *settings)
 }
 
 unsigned long long int power(unsigned char base, unsigned char exponent)
-{   
+{
     unsigned long long int number = 1;
     for (unsigned char i = 0; i < exponent; i++)
     {
         number *= base;
     }
-    
     return number;
 }
 
-void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings)
-{   
+void start_game_loop(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, unsigned short *frame_buffer, font_descriptor_t *font_descriptor, settings_t *settings, bool bot)
+{
+    int counter = 0;
     bool reload_pistols = false;
     unsigned char round_amount = 33;
     unsigned char ch, choice = RESUME;
@@ -108,10 +117,10 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_m
     /* Sets up the map and settings */
     game_map_t game_map = load_default_game();
     load_settings(&game_map, settings);
-    
-    draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
+
+    draw_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
     while (true)
-    {   
+    {
         /* Light on LED-32 */
         *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_LINE_o) = UINT32_MAX - (power(2, round_amount - 1) - 1);
 
@@ -124,11 +133,10 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_m
         {
             *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0xFF7700;
         }
-        else  if (game_map.cowboy_left.health == 0)
+        else if (game_map.cowboy_left.health == 0)
         {
             *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB1_o) = 0xFF0000;
         }
-
 
         /* Light off RGB-LED right*/
         if (game_map.cowboy_right.health > COWBOY_HEALTH / 3)
@@ -144,14 +152,13 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_m
             *(volatile uint32_t *)(led_mem_base + SPILED_REG_LED_RGB2_o) = 0xFF0000;
         }
 
-
         /* Checks whether it is the end of current game*/
         if (game_map.cowboy_left.state == DEAD || game_map.cowboy_right.state == DEAD)
         {
             sleep(1);
             game_map.cowboy_left.animation = 0;
             game_map.cowboy_right.animation = 0;
-            draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
+            draw_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
             sleep(1);
             printf("\n--------------------\n");
             printf("\n|     GAME OVER     |\n");
@@ -192,7 +199,6 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_m
                 {
                     round_amount = 33;
                 }
-                
             }
         }
 
@@ -229,21 +235,32 @@ void start_two_players_game(unsigned char *parlcd_mem_base, unsigned char *led_m
         {
             fire_cowboy_left(&game_map);
         }
-        else if (ch == 'o')
+
+        if (!bot)
         {
-            game_map.cowboy_right.direction = UP;
-        }
-        else if (ch == 'l')
-        {
-            game_map.cowboy_right.direction = DOWN;
-        }
-        else if (ch == 'k')
-        {
-            fire_cowboy_right(&game_map);
+            if (ch == 'o')
+            {
+                game_map.cowboy_right.direction = UP;
+            }
+            else if (ch == 'l')
+            {
+                game_map.cowboy_right.direction = DOWN;
+            }
+            else if (ch == 'k')
+            {
+                fire_cowboy_right(&game_map);
+            }
         }
 
-        draw_two_players_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
+        if (counter == 60)
+        {
+            make_decision(&game_map);
+            counter = 0;
+        }
+
+        draw_game(parlcd_mem_base, frame_buffer, font_descriptor, &game_map);
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+        counter++;
     }
 
     /* Light off LED-32 and RGB-LEDs*/

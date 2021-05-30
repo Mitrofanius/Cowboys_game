@@ -15,8 +15,8 @@ void start_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, uns
     /* Default settings */
     settings_t settings = {
         .player_left_color = C_LIGHT_YELLOW,
-        .player_right_color = C_LIGHT_GREEN,
-        .bullet_color = C_PINK,
+        .player_right_color = C_PINK,
+        .bullet_color = C_LIGHT_GREEN,
         .bullet_speed = 10};
 
     while (true)
@@ -31,14 +31,14 @@ void start_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, uns
             printf("\n--------------------\n");
             printf("\n|  ONE_PLAYER_GAME |\n");
             printf("\n--------------------\n");
-            start_one_player_game(parlcd_mem_base, led_mem_base, frame_buffer, font_descriptor, &settings);
+            start_game_loop(parlcd_mem_base, led_mem_base, frame_buffer, font_descriptor, &settings, true);
             break;
         case TWO_PLAYERS_GAME:
             /* 2 players game */
             printf("\n--------------------\n");
             printf("\n| TWO_PLAYERS_GAME |\n");
             printf("\n--------------------\n");
-            start_two_players_game(parlcd_mem_base, led_mem_base, frame_buffer, font_descriptor, &settings);
+            start_game_loop(parlcd_mem_base, led_mem_base, frame_buffer, font_descriptor, &settings, false);
             break;
         case SETTINGS:
             /* settings */
@@ -60,7 +60,7 @@ void start_game(unsigned char *parlcd_mem_base, unsigned char *led_mem_base, uns
             break;
         }
     }
-    
+
     /* Closing animation */
     draw_closing_scene(parlcd_mem_base, frame_buffer, font_descriptor);
 
