@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "*.list": "asm-intel-x86-generic",
+        "mzapo_regs.h": "c",
+        "main_menu.h": "c",
+        "one_player_game.h": "c",
+        "settings.h": "c",
+        "type_traits": "c",
+        "two_players_game.h": "c",
+        "settings_menu.h": "c",
+        "draw_settings_menu.h": "c",
+        "input_catcher.h": "c",
+        "pause_menu.h": "c",
+        "draw.h": "c"
+    }
+}

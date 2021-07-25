@@ -1,0 +1,5 @@
+*.o
+depend
+connect.gdb
+cowboys
+eval.txt
